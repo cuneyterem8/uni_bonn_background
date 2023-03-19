@@ -1,0 +1,17 @@
+# Readme Instruction to Run the Project
+
+
+Note: This project is developed using Eclipse IDE for java. Make sure that java is installed in your computer. 
+
+
+# Running in Console
+
+1. Unzip the assignment folder.
+2. Navigate into the ForestFireModelPackage folder using command prompt. 
+3. Type the following command "javac ForestFireModel.java NeighbourTypesCount.java NextState.java TorusNeighbor.java" and it will be compiled.
+4. Type in command prompt "java ForestFireModel", program will then execute
+7. Provide the probabilities as input to see the Final result.
+8. Please refer to sample screenshots included in the assignment folder.
+
+
+
