@@ -1,0 +1,112 @@
+(test_env_1) erem@robo15:~/folder1/person_re_identification$ export TF_FORCE_GPU_ALLOW_GROWTH=true
+(test_env_1) erem@robo15:~/folder1/person_re_identification$ python embed.py --experiment_root ~/experiments/my_experiment5 --dataset data/market1501_query.csv --image_root data/image_root --filename market1501_query_embeddings.h5 --batch_size 32
+Loading args from /home/user/erem/experiments/my_experiment5/args.json.
+Evaluating using the following parameters:
+aggregator: None
+batch_k: 4
+batch_p: 32
+batch_size: 32
+checkpoint: None
+checkpoint_frequency: 1000
+crop_augment: None
+dataset: data/market1501_query.csv
+decay_start_iteration: 15000
+detailed_logs: False
+embedding_dim: 128
+experiment_root: /home/user/erem/experiments/my_experiment5
+filename: /home/user/erem/experiments/my_experiment5/market1501_query_embeddings.h5
+flip_augment: False
+head_name: fc1024
+image_root: data/image_root
+initial_checkpoint: None
+learning_rate: 0.0003
+loading_threads: 8
+loss: batch_hard
+margin: soft
+metric: euclidean
+model_name: resnet_v1_50
+net_input_height: 256
+net_input_width: 128
+pre_crop_height: 288
+pre_crop_width: 144
+quiet: False
+resume: False
+train_iterations: 25000
+train_set: data/market1501_train.csv
+WARNING:tensorflow:From /home/user/erem/anaconda3/envs/test_env_1/lib/python3.7/site-packages/tensorflow_core/python/autograph/converters/directives.py:119: The name tf.read_file is deprecated. Please use tf.io.read_file instead.
+
+WARNING:tensorflow:From /home/user/erem/anaconda3/envs/test_env_1/lib/python3.7/site-packages/tensorflow_core/python/autograph/converters/directives.py:119: The name tf.image.resize_images is deprecated. Please use tf.image.resize instead.
+
+WARNING:tensorflow:From embed.py:194: DatasetV1.make_one_shot_iterator (from tensorflow.python.data.ops.dataset_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `for ... in dataset:` to iterate over a dataset. If using `tf.estimator`, return the `Dataset` object directly from your input function. As a last resort, you can use `tf.compat.v1.data.make_one_shot_iterator(dataset)`.
+WARNING:tensorflow:
+The TensorFlow contrib module will not be included in TensorFlow 2.0.
+For more information, please see:
+  * https://github.com/tensorflow/community/blob/master/rfcs/20180907-contrib-sunset.md
+  * https://github.com/tensorflow/addons
+  * https://github.com/tensorflow/io (for I/O related ops)
+If you depend on functionality not listed there, please file an issue.
+
+WARNING:tensorflow:From /home/user/erem/folder1/person_re_identification/nets/resnet_utils.py:230: The name tf.GraphKeys is deprecated. Please use tf.compat.v1.GraphKeys instead.
+
+WARNING:tensorflow:From /home/user/erem/folder1/person_re_identification/nets/resnet_v1.py:202: The name tf.variable_scope is deprecated. Please use tf.compat.v1.variable_scope instead.
+
+WARNING:tensorflow:From /home/user/erem/anaconda3/envs/test_env_1/lib/python3.7/site-packages/tensorflow_core/contrib/layers/python/layers/layers.py:1057: Layer.apply (from tensorflow.python.keras.engine.base_layer) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use `layer.__call__` method instead.
+WARNING:tensorflow:From embed.py:204: The name tf.Session is deprecated. Please use tf.compat.v1.Session instead.
+
+2020-09-25 10:40:21.018421: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
+2020-09-25 10:40:21.046871: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:983] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2020-09-25 10:40:21.047154: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: GeForce RTX 2080 major: 7 minor: 5 memoryClockRate(GHz): 1.71
+pciBusID: 0000:01:00.0
+2020-09-25 10:40:21.047301: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-09-25 10:40:21.048114: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-09-25 10:40:21.048745: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-09-25 10:40:21.048909: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-09-25 10:40:21.049696: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-09-25 10:40:21.050327: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-09-25 10:40:21.052157: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-09-25 10:40:21.052255: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:983] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2020-09-25 10:40:21.052601: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:983] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2020-09-25 10:40:21.052854: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-09-25 10:40:21.053106: I tensorflow/core/platform/cpu_feature_guard.cc:142] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2020-09-25 10:40:21.056966: I tensorflow/core/platform/profile_utils/cpu_utils.cc:94] CPU Frequency: 3600000000 Hz
+2020-09-25 10:40:21.057409: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x562a38e172f0 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2020-09-25 10:40:21.057420: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2020-09-25 10:40:21.057532: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:983] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2020-09-25 10:40:21.057826: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties: 
+name: GeForce RTX 2080 major: 7 minor: 5 memoryClockRate(GHz): 1.71
+pciBusID: 0000:01:00.0
+2020-09-25 10:40:21.057846: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-09-25 10:40:21.057856: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-09-25 10:40:21.057865: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcufft.so.10.0
+2020-09-25 10:40:21.057874: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcurand.so.10.0
+2020-09-25 10:40:21.057900: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusolver.so.10.0
+2020-09-25 10:40:21.057933: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcusparse.so.10.0
+2020-09-25 10:40:21.057957: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-09-25 10:40:21.058035: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:983] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2020-09-25 10:40:21.058330: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:983] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2020-09-25 10:40:21.058681: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1746] Adding visible gpu devices: 0
+2020-09-25 10:40:21.058701: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudart.so.10.0
+2020-09-25 10:40:21.120620: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1159] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-09-25 10:40:21.120640: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1165]      0 
+2020-09-25 10:40:21.120661: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N 
+2020-09-25 10:40:21.120848: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:983] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2020-09-25 10:40:21.121146: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:983] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2020-09-25 10:40:21.121465: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:983] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2020-09-25 10:40:21.121706: W tensorflow/core/common_runtime/gpu/gpu_bfc_allocator.cc:39] Overriding allow_growth setting because the TF_FORCE_GPU_ALLOW_GROWTH environment variable is set. Original config value was 0.
+2020-09-25 10:40:21.121725: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 7467 MB memory) -> physical GPU (device: 0, name: GeForce RTX 2080, pci bus id: 0000:01:00.0, compute capability: 7.5)
+2020-09-25 10:40:21.122794: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x562a3b2a09e0 initialized for platform CUDA (this does not guarantee that XLA will be used). Devices:
+2020-09-25 10:40:21.122803: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): GeForce RTX 2080, Compute Capability 7.5
+Restoring from checkpoint: /home/user/erem/experiments/my_experiment5/checkpoint-25000
+WARNING:tensorflow:From embed.py:212: The name tf.train.Saver is deprecated. Please use tf.compat.v1.train.Saver instead.
+
+2020-09-25 10:40:21.918753: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcublas.so.10.0
+2020-09-25 10:40:22.030337: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcudnn.so.7
+2020-09-25 10:40:23.040539: I tensorflow/stream_executor/cuda/cuda_driver.cc:831] failed to allocate 3.79G (4072793600 bytes) from device: CUDA_ERROR_OUT_OF_MEMORY: out of memory
+Embedded batch 3360-3368/3368
+Done with embedding, aggregating augmentations...
+

@@ -1,0 +1,9 @@
+ssh -L 6006:robo15:6006 erem@zeus.informatik.uni-bonn.de
+screen -S training
+#ctrl + a + d
+screen -r training
+python train.py --train_set data/market1501_train.csv --image_root data/image_root/bounding_box_train --experiment_root ~/experiments/my_experiment5 --resume
+export TF_FORCE_GPU_ALLOW_GROWTH=true
+tensorboard --logdir ~/experiments/my_experiment5
+#http://localhost:6006/
+
