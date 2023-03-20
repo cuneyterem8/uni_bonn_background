@@ -1,0 +1,21 @@
+Total points sheet 1:  9 / 10
+
+Programming Part [4/5]
+    (1) plot trajectory (3/3)
+        - correct plots (either componentwise or in 3D) {2/2}
+        - reasonable presentation {1/1} (should include axes labels)
+
+    (2) calc and plot velocity and acceleration vectors (1/2)
+        - correct calculation of dervatives {1/1}
+        - ploting/vizualisation {0/1} (arrows are not reasonably scaled, figure looks messy)
+        
+
+Theoretical Part [5/5]
+    (1) definition of groundtruth (2/2)
+        - represents real data (no prediction) {1/1}
+        - baseline for testing of sensors and predicitons {1/1}
+
+    (2) definition of variance (3/3)
+        - correct usage of expectation value (linearity, etc.) {1/1}
+        - correct usage of binomial {1/1}
+        - correct solution {1/1}

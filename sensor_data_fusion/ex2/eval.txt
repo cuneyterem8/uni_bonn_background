@@ -1,0 +1,19 @@
+Total points sheet 1: 7 / 10
+
+Programming Part [2/3]
+    (1) plot trajectory (2/3)
+        - correct calculation of measured data {2/2}
+        - reasonable presentation of data {0/1} 
+        
+Theoretical Part [5/7]
+    (1) Kalman filter (3/3)
+        - individual steps (0.5 each) {2/2}
+        - coherent explaination {1/1}
+
+    (2) combination of measurements from different sensors (1/2)
+        - how can measurements be combined {0/1} exact procedure still unclear
+        - comment on accuracy {1/1}
+
+    (3) application of (2) (1/2)
+        - calculation of combined measurement {0/1} no combination taking place
+        - coordinate conversion {1/1}
