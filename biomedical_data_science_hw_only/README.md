@@ -78,7 +78,7 @@ plt.xlabel('TSNE1')
 plt.ylabel('TSNE2')
 plt.show()
 ```
-![alt text](https://github.com/cuneyterem8/uni_bonn_background/blob/main/biomedical_data_science_hw_only/output3.png?raw=true)
+![alt text](https://github.com/cuneyterem8/uni_bonn_background/blob/main/biomedical_data_science_hw_only/output3.png?raw=true){: width="50%" height="50%"}
 
 > output 3
 
