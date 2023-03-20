@@ -12,6 +12,6 @@ learning, artificial immune systems, adaptive behaviour, self-organising critica
 
 ### Theory
 
-![alt_text](https://github.com/cuneyterem8/uni_bonn_background/blob/main/artificial_life/image.png?raw=true)
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/artificial_life/image.png?raw=true" width="60%" height="60%">
 
 > Example from exercise
