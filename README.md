@@ -15,6 +15,7 @@ I took a total of 120 credits with a total of 14 courses and thesis+seminar from
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/diplomas/bonn_diploma.JPEG?raw=true" width="60%" height="60%">
 > Diploma
 
+
 intelligence systems: artificial life, machine learning, neural networks, robot learning, cognitive robotics, cognitive robotics lab, humanoid robots lab, humanoid robots seminar
 
 computer-vision-audio: deep learning for visual recognition, audio signal processing
