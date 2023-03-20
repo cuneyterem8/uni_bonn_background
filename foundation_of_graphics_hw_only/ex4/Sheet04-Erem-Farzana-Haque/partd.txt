@@ -1,0 +1,3 @@
+partd)
+
+Runge-Kutta method is iterative method that used in temporal discrimination for approximate solutions of the ordinary differential equations which also includes Euler method having less order. Euler method has first order of accuracy whereas Runge-Kutta is advanced version of it having fourth order of accuracy so that Runge-Kutta better and has smoother results. Python integrated method is similar as Runge-Kutta method. 
