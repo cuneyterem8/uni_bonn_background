@@ -1,6 +1,6 @@
 # Computer Science Master in University of Bonn
 
-The University of Bonn is one of the largest research-based universities in the world. The THE ranking is 89 and the QS ranking is 201 in the world. 
+The University of Bonn is one of the largest research-based universities in the world. The THE ranking is 89 and the QS ranking is 201 in the world in 2023. 
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/diplomas/desk.JPEG?raw=true" width="60%" height="60%">
 
