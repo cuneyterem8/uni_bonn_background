@@ -1,0 +1,2170 @@
+---
+title: "Corona Warn App Akezptanzstudie"
+output:
+  pdf_document: 
+    fig_caption: yes
+    keep_tex: yes
+    toc: yes
+    fig_width: 9
+    fig_height: 7
+    number_sections: yes
+  word_document: 
+    toc: yes
+    fig_width: 9
+    fig_height: 7
+    fig_caption: yes
+  html_document: 
+    fig_caption: yes
+    fig_height: 7
+    fig_width: 9
+    number_sections: yes
+    toc: yes
+---
+
+```{r setup, include=FALSE, echo=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+
+
+```
+
+```{r, include=FALSE, code = readLines("./COVID-APP-Q.R")}
+```
+
+# Beteiligte Organisationen und Wissenschaftler
+**Rheinische Friedrich-Wilhelms-Universität Bonn:**  
+Eva Gerlitz, Maximilian Häring, Prof. Dr. Matthew Smith, Christian Tiefenau
+
+
+**Friedrich-Alexander-Universität Erlangen-Nürnberg:**
+Dr. Zinaida Benenson
+
+**Leibniz Universität Hannover:**  
+Yasemin Acar, Prof. Dr. Sascha Fahl
+
+**Helmholtz Center for Information Security (CISPA):**  
+Dr. Katharina Krombholz
+
+**Karlsruher Institut für Technologie (KIT):**  
+Mattia Mossano, Prof. Dr. Melanie Volkamer
+
+**Universität der Bundeswehr München:**  
+Dr. Yomna Abdelrahman, Prof. Dr. Florian Alt
+
+**Institut national de recherche en informatique et en automatique (INRIA):**  
+Dr. Ruba Abu-Salma
+
+**Universität des Saarlandes:**  
+Dr. Freya Gassmann
+
+
+# Intro
+
+
+Vom 30.5.2020 bis zum 11.6.2020 haben wir eine Online-Umfrage zu der Nutzungsakzeptanz der Corona-Warn-App, bezogen auf diverse technische und rechtliche Aspekte, durchgeführt. Die Umfrage wurde durch die Firma Qualtrics möglichst repräsentativ nach Alter, Bildungsgrad, Haushaltseinkommen und Bundesland verteilt. Der Fragebogen kann hier eingesehen werden: 
+
+https://uni-bonn.sciebo.de/s/YSPpMXrkvuZsUKM
+
+#Limitationen
+
+- Dieser Bericht ist in einem sehr frühen Stadium und ist noch nicht peer-reviewed worden. 
+
+- Der Fragebogen hat TeilnehmerInnen gebeten, basierend auf hypothetischen Aussagen ihr zukünftiges Handeln abzuschätzen. Dazu kommt, dass die Materie komplex ist. Aus diesem Grund sollten die Zahlen nur als Tendenz und nicht als genaue Vorhersage gesehen werden. 
+
+- Der Fragebogen wurde möglichst repräsentativ nach Alter, Bildungsgrad, Haushaltseinkommen und Bundesland verteilt. Da es sich um einen Online-Fragebogen handelte, sind die Gruppen der TeilnehmerInnen, die älter als 65 sind, unter- und junge TeilnehmerInnen überrepräsentiert. Auch haben wir vergleichsweise wenige Personen mit sehr hohen Gehältern. Trotzdem deckt der Fragebogen ein breites Spektrum an BürgerInnen ab. 
+
+- Der Bericht ist noch nicht durch ein Lektorat gegangen. 
+
+# Überblick über die Studie
+Nachdem den 1025 TeilnehmerInnen eine minimale Beschreibung der Corona-Warn-App angezeigt wurde, wurden sie befragt, mit welcher Wahrscheinlichkeit sie die App nutzen würden. Darauf folgend wurden den TeilnehmerInnen 23 hypothetische Aussagen über die App präsentiert und es wurde gefragt, wie sie der Nutzung gegenüberstehen, wenn diese Aussage zuträfe. Die folgende Tabelle gibt eine Übersicht über die Aussagen und einen Kürzel der im weiteren Text genutzt wird.  
+
+
+`r knitr::kable(factorQuestionMapping, row.names = FALSE,full_width = F,position = "float_right", caption = "Faktorenübersicht", col.names=c("Faktor","Label"))`
+
+
+
+# Datenbereinigung
+
+TeilnehmerInnen, die die Aufmerksamkeitsfragen und andere Qualitätsmerkmale nicht erfolgreich bestanden haben wurden herausgefiltert. Es blieben noch `r nrow(qAll)` TeilnehmerInnen für die weitere Analyse. 
+
+
+# Ergebnisse
+
+Von den `r nrow(qAll)` TeilnehmerInnen gaben `r nrow(qAllYes)` an, dass sie die App wahrscheinlich oder auf jeden Fall nutzen würden, `r nrow(qAllNo)` waren der App negativ gestimmt und würden sie wahrscheinlich nicht oder auf keinen Fall nutzen und `r nrow(qAllUn)` TeilnehmerInnen waren unentschlossen. Folgende Grafik zeigt eine Übersicht. Dabei waren 
+
+
+```{r app_install, include=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+#general install
+field = qAll$app_install
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab("Nutzung") + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+```
+
+
+
+# Einfluss der Faktoren
+
+Für die Untersuchung der Faktoren wurde ein weiteres Subset gebildet. Von den `r nrow(qAll)` TeilnehmerInnen haben `r nrow(qExtremeYes)`, die der App grundsätzlich positiv eingestellt waren, auch bei negativen Faktoren positive Antworten gegeben. Hingegen haben `r nrow(qExtremeNo)` TeilnehmerInnen, die der App grundsätzlich negativ eingestellt waren, auch bei positiven Faktoren negative Antworten gegeben. Diese TeilnehmerInnen betrachten wir während der Faktoranalyse nicht, da deren Nutzungsentscheidung nicht von den Faktoren abhängt. Damit bleiben `r nrow(q)` TeilnehmerInnen für die Faktoranalyse. Eine Übersicht über die hypothetischen Effekte der verschiedenen Aussagen wird in den folgenden zwei Tabellen gegeben. Die erste Tabelle zeigt die Faktoren geordnet nach den Faktoren, welche TeilnehmerInnen, die vorher gegen eine Nutzung der App waren, dazu bringen könnten die App zu nutzen (in Prozent). 
+
+`r knitr::kable(allFactorWin, row.names = FALSE, full_width = F, caption = "Positive Veränderung", col.names=c("Faktor","Prozent"))`
+
+
+Die zweite Tabelle zeigt die Faktoren geordnet danach, welche Faktoren TeilnehmerInnen, welche vorher für eine Nutzung de App waren, davon abbringen könnten die App zu nutzen (in Prozent). 
+
+`r knitr::kable(allFactorLoss, row.names = FALSE, full_width = F, caption = "Negative Veränderung", col.names=c("Faktor","Prozent"))`
+
+
+```{r central_vs_decentral, include=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+
+
+poll_decentral = polchangeMS(q,c("app_install","F_Hacker"))
+
+```
+# Hacking Gefahr
+Den stärksten negativen Effekt sehen wir bei der "Hacking" Frage. Ein Nachteil des "dezentralen" Ansatzes ist, dass die temporären Bluetooth IDs von Infizierten auf einem zentralen Server veröffentlicht werden müssen. Dies ist nötig, damit die App auf anderen Smartphones überprüfen kann, ob sich die Geräte in der Nähe von Infizierten aufgehalten haben. AngreiferInnen, welche in der Lage sind lokal diese temporären Bluetooth IDs mitzuschneiden und einer Person zuzuordnen, beispielsweise durch eine Kamera oder persönliche Überwachung, können damit sehen, wenn diese Person als infiziert markiert wird. Auch wenn dieser Angriff, nach unserem Wissen, bisher theoretischer Natur ist und vermutlich die Gefahr für die meisten BürgerInnnen als gering eingeschätzt werden kann, sollte sie dennoch ernst genommen werden. Es ist davon auszugehen, das diese Gefahr in den Medien diskutiert wird und sie ohne weiteren Kontext mit hoher Wahrscheinlichkeit eine negative Reaktion hervorrufen wird. 
+
+Die folgende Grafik zeigt eine detaillierte Aufschlüsselung der Antworten der TeilnehmerInnen bezüglich der Aussage. 
+
+
+```{r F_Hacker1, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Falls ich positiv auf COVID-19 getestet werde, könnten Hacker in meiner Umgebung rausfinden, dass ich infiziert bin
+################################################################################################
+field = qNoWay$F_Hacker
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Hacker
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Hacker
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Hacker
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Hacker
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Falls ich positiv auf COVID-19 getestet werde, könnten Hacker in meiner Umgebung rausfinden, dass ich infiziert bin ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+```
+
+
+
+```{r age, echo=FALSE, warning=FALSE, message=FALSE}
+#age qualtrics
+#agebreaks=c(18, 25, 35, 50, 65, 99)
+#agetags=c("18-24","25-34","35-49","50-64","65-99")
+#ggplot(q, aes(x=factor(age)))+
+#  geom_bar(stat="count", color="darkblue", fill="lightblue")+
+#  theme_minimal() +
+#  xlab("Alter Clickworker") + ylab("Anzahl") +
+#  theme_minimal()
+
+
+
+```
+
+
+```{r changeD_Z, echo=FALSE, warning=FALSE, message=FALSE}
+poll_central= polchangeMS(q,c("app_install","F_RKI_Sehen_Andere","F_RKI_Sehen_Ansteckungsrisiko","F_Mindestabstand","F_Datenbank_Infizierten"))
+
+poll_decentral = polchangeMS(q,c("app_install","F_Hacker"))
+
+poll_central2 = polchangeMS2(q,c("app_install","F_RKI_Sehen_Andere","F_RKI_Sehen_Ansteckungsrisiko","F_Mindestabstand","F_Datenbank_Infizierten"))
+
+poll_decentral2 = polchangeMS2(q,c("app_install","F_Hacker"))
+```
+
+
+
+
+# Faktoren
+Im Folgenden werden einzelne Faktoren näher beleuchtet. Es wurden dabei generische Faktoren sowie Faktoren die auf die zentrale und dezentrale App zutreffen analysiert. Es wurden auch einige Faktoren analysiert, die nicht geplant sind, jedoch in der Bevölkerung einen verbreiteten Irrglauben darstellen. 
+Wie bereits oben, wurden die Antworten der TeilnehmerInnen bezüglich der Aussage nach der jeweiligen generellen Einstellung bezüglich der Nutzung der App aufgeteilt.
+
+
+## Positive Faktoren
+Folgende Aussagen beschreiben Funktionalitäten, welche die TeilnehmerInnen selbst oder andere NutzerInnen der App über Ansteckungsrisiken informieren.
+### Die App würde mich benachrichtigen, falls ich einem COVID-19 Ansteckungsrisiko ausgesetzt war.
+
+
+
+
+```{r F_Ansteckungsrisiko, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Die App würde mich benachrichtigen, falls ich einem COVID-19 Ansteckungsrisiko ausgesetzt war.
+################################################################################################
+field = qNoWay$F_Ansteckungsrisiko
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Ansteckungsrisiko
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Ansteckungsrisiko
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Ansteckungsrisiko
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Ansteckungsrisiko
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Die App würde mich benachrichtigen, falls ich einem COVID-19 Ansteckungsrisiko ausgesetzt war. ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+### Falls ich positiv auf COVID-19 getestet werde, würde die App automatisch andere NutzerInnen der App benachrichtigen, die sich bei mir anstecken konnten. 
+
+```{r F_Andere, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Falls ich positiv auf COVID-19 getestet werde, würde die App automatisch andere NutzerInnen der App benachrichtigen, die sich bei mir anstecken konnten. 
+################################################################################################
+field = qNoWay$F_Andere
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Andere
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Andere
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Andere
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Andere
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Falls ich positiv auf COVID-19 getestet werde, würde die App automatisch andere NutzerInnen der App benachrichtigen, die sich bei mir anstecken konnten. ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+### Die App würde Menschen über Ansteckungsrisiken informieren, die darüber sonst nicht vom Gesundheitsamt informiert werden würden. 
+
+```{r F_Sonst_Nicht, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Die App würde Menschen über Ansteckungsrisiken informieren, die darüber sonst nicht vom Gesundheitsamt informiert werden würden. 
+################################################################################################
+field = qNoWay$F_Sonst_Nicht
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Sonst_Nicht
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Sonst_Nicht
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Sonst_Nicht
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Sonst_Nicht
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Die App würde Menschen über Ansteckungsrisiken informieren, die darüber sonst nicht vom Gesundheitsamt informiert werden würden. ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+### Die App würde dem RKI helfen die COVID-19 Lage in Deutschland besser einzuschätzen. 
+
+```{r F_Einschätzen, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Die App würde dem RKI helfen die COVID-19 Lage in Deutschland besser einzuschätzen. .
+################################################################################################
+field = qNoWay$F_Einschätzen
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Einschätzen
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Einschätzen
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Einschätzen
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Einschätzen
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Die App würde dem RKI helfen die COVID-19 Lage in Deutschland besser einzuschätzen. ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+
+### Die Nutzung der App würde es der Bevölkerung ermöglichen schneller zum öffentlichen Leben zurückzukehren.
+
+```{r F_Leben, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Die Nutzung der App würde es der Bevölkerung ermöglichen schneller zum öffentlichen Leben zurückzukehren.
+################################################################################################
+field = qNoWay$F_Leben
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Leben
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Leben
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Leben
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Leben
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Die Nutzung der App würde es der Bevölkerung ermöglichen schneller zum öffentlichen Leben zurückzukehren.",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+### Die Nutzung der App würde es ermöglichen, die Wirtschaft schneller wieder hochzufahren. 
+
+```{r F_Wirtschaft, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Die Nutzung der App würde es ermöglichen, die Wirtschaft schneller wieder hochzufahren. 
+################################################################################################
+field = qNoWay$F_Wirtschaft
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Wirtschaft
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Wirtschaft
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Wirtschaft
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Wirtschaft
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Die Nutzung der App würde es ermöglichen, die Wirtschaft schneller wieder hochzufahren. ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+## Faktoren mit Privatsphäre Tradeoff / "Zentrale" App
+Die folgenden Faktoren stellen Risiken der "zentralen" Lösung dar, welche mit möglichen Einschränkungen der persönlichen Privatsphäre einhergehen.
+
+### Falls ich positiv auf COVID-19 getestet werde, würde die App es dem RKI ermöglichen zu sehen mit wem ich Kontakt hatte, um diese Personen zu informieren. 
+
+```{r F_RKI_Sehen_Andere, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Falls ich positiv auf COVID-19 getestet werde, würde die App es dem RKI ermöglichen zu sehen mit wem ich Kontakt hatte, um diese Personen zu informieren. 
+################################################################################################
+field = qNoWay$F_RKI_Sehen_Andere
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_RKI_Sehen_Andere
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_RKI_Sehen_Andere
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_RKI_Sehen_Andere
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_RKI_Sehen_Andere
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Falls ich positiv auf COVID-19 getestet werde, würde die App es dem RKI ermöglichen zu sehen mit wem ich Kontakt hatte, um diese Personen zu informieren.  ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+### Falls jemand in meinem Umfeld positiv auf COVID-19 getestet wird, würde die App es dem RKI ermöglichen zu sehen, dass ich mit dieser Person Kontakt hatte, um mich zu informieren.  
+
+
+```{r F_RKI_Sehen_Ansteckungsrisiko, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Falls jemand in meinem Umfeld positiv auf COVID-19 getestet wird, würde die App es dem RKI ermöglichen zu sehen, dass ich mit dieser Person Kontakt hatte, um mich zu informieren. 
+################################################################################################
+field = qNoWay$F_RKI_Sehen_Ansteckungsrisiko
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_RKI_Sehen_Ansteckungsrisiko
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_RKI_Sehen_Ansteckungsrisiko
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_RKI_Sehen_Ansteckungsrisiko
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_RKI_Sehen_Ansteckungsrisiko
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Falls jemand in meinem Umfeld positiv auf COVID-19 getestet wird, würde die App es dem RKI ermöglichen zu sehen, dass ich mit dieser Person Kontakt hatte, um mich zu informieren. ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+### Die Nutzung der App würde es dem RKI ermöglichen zu erfahren, wenn ich den Mindestabstand zu anderen Personen nicht einhalte.  
+
+
+```{r F_Mindestabstand, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Die Nutzung der App würde es dem RKI ermöglichen zu erfahren, wenn ich den Mindestabstand zu anderen Personen nicht einhalte. 
+################################################################################################
+field = qNoWay$F_Mindestabstand
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Mindestabstand
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Mindestabstand
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Mindestabstand
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Mindestabstand
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Die Nutzung der App würde es dem RKI ermöglichen zu erfahren, wenn ich den Mindestabstand zu anderen Personen nicht einhalte. ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+### Das RKI hätte eine Datenbank mit Kontaktinformationen von Infizierten und von Personen mit denen diese Kontakt hatten.  
+
+```{r F_Datenbank_Infizierten, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Das RKI hätte eine Datenbank mit Kontaktinformationen von Infizierten und von Personen mit denen diese Kontakt hatten.  
+################################################################################################
+field = qNoWay$F_Datenbank_Infizierten
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Datenbank_Infizierten
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Datenbank_Infizierten
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Datenbank_Infizierten
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Datenbank_Infizierten
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Das RKI hätte eine Datenbank mit Kontaktinformationen von Infizierten und von Personen mit denen diese Kontakt hatten.  ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+### Die App würde keine Informationen über meinen Aufenthaltsort erheben. 
+
+```{r F_Keinen_Aufenthaltsort, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Die App würde keine Informationen über meinen Aufenthaltsort erheben. 
+################################################################################################
+field = qNoWay$F_Keinen_Aufenthaltsort
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Keinen_Aufenthaltsort
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Keinen_Aufenthaltsort
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Keinen_Aufenthaltsort
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Keinen_Aufenthaltsort
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Die App würde keine Informationen über meinen Aufenthaltsort erheben.  ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+```
+
+
+
+## Faktoren der "dezentralen" Lösung
+Die folgenden Faktoren stellen Risiken der "dezentralen" Lösung dar.
+
+### Falls ich positiv auf COVID-19 getestet werde, könnten Hacker in meiner Umgebung rausfinden, dass ich infiziert bin
+
+```{r F_Hacker, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Falls ich positiv auf COVID-19 getestet werde, könnten Hacker in meiner Umgebung rausfinden, dass ich infiziert bin
+################################################################################################
+field = qNoWay$F_Hacker
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Hacker
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Hacker
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Hacker
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Hacker
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Falls ich positiv auf COVID-19 getestet werde, könnten Hacker in meiner Umgebung rausfinden, dass ich infiziert bin ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+
+
+
+## Irrglauben Faktoren 
+Folgende Aussagen beschreiben Funktionalitäten, die Irrglauben darstellen. 
+
+### Die App würde Informationen über meinen Aufenthaltsort nutzen, um das Infektionsrisiko für andere besser einzuschätzen. 
+
+```{r F_Aufenthaltsort, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Die App würde Informationen über meinen Aufenthaltsort nutzen, um das Infektionsrisiko für andere besser einzuschätzen. 
+################################################################################################
+field = qNoWay$F_Aufenthaltsort
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Aufenthaltsort
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Aufenthaltsort
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Aufenthaltsort
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Aufenthaltsort
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Die App würde Informationen über meinen Aufenthaltsort nutzen, um das Infektionsrisiko für andere besser einzuschätzen. ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+
+
+```
+
+
+
+
+## Faktoren bzgl. Genauigkeit
+
+
+### Es bestünde die Möglichkeit, dass die App fälschlicherweise ein Ansteckungsrisiko meldet und ich mich deshalb unnötig in Quarantäne begeben muss.
+
+```{r F_FP_Quarantäne, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Es bestünde die Möglichkeit, dass die App fälschlicherweise ein Ansteckungsrisiko meldet und ich mich deshalb unnötig in Quarantäne begeben muss.
+################################################################################################
+field = qNoWay$F_FP_Quarantäne
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_FP_Quarantäne
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_FP_Quarantäne
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_FP_Quarantäne
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_FP_Quarantäne
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Es bestünde die Möglichkeit, dass die App fälschlicherweise ein Ansteckungsrisiko meldet und ich mich deshalb unnötig in Quarantäne begeben muss.",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+
+### Es bestünde die Möglichkeit, dass die App fälschlicherweise ein Ansteckungsrisiko meldet und ich mich deshalb unnötig testen lasse. 
+
+```{r F_FP_Testen, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Es bestünde die Möglichkeit, dass die App fälschlicherweise ein Ansteckungsrisiko meldet und ich mich deshalb unnötig testen lasse. 
+################################################################################################
+field = qNoWay$F_FP_Testen
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_FP_Testen
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_FP_Testen
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_FP_Testen
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_FP_Testen
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Es bestünde die Möglichkeit, dass die App fälschlicherweise ein Ansteckungsrisiko meldet und ich mich deshalb unnötig testen lasse. ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+
+### Falls mich die App über ein Ansteckungsrisiko informiert, müsste ich mich in gesetzlich verordnete Quarantäne begeben. 
+
+```{r F_Quarantäne_Verordnet, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Falls mich die App über ein Ansteckungsrisiko informiert, müsste ich mich in gesetzlich verordnete Quarantäne begeben. 
+####################################################
+field = qNoWay$F_Quarantäne_Verordnet
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Quarantäne_Verordnet
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Quarantäne_Verordnet
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Quarantäne_Verordnet
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Quarantäne_Verordnet
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Falls mich die App über ein Ansteckungsrisiko informiert, müsste ich mich in gesetzlich verordnete Quarantäne begeben.",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+
+
+## Schutzmaßnahmen
+Die folgenden Aussagen beziehen sich auf den Umgang mit den durch die App gewonnen Daten und die Sicherheit der Corona-Warn-App.
+### Der Schutz der Daten würde durch ein  für die App entworfenes, neues Gesetz gewährleistet. 
+
+```{r F_Gesetz, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Der Schutz der Daten würde durch ein  für die App entworfenes, neues Gesetz gewährleistet. 
+################################################################################################
+field = qNoWay$F_Gesetz
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Gesetz
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Gesetz
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Gesetz
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Gesetz
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Der Schutz der Daten würde durch ein  für die App entworfenes, neues Gesetz gewährleistet. ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+
+
+### Der Schutz der Daten würde durch eine Datenschutzerklärung und die Datenschutzgrundverordnung gewährleistet. 
+
+```{r F_DGSVO, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Der Schutz der Daten würde durch eine Datenschutzerklärung und die Datenschutzgrundverordnung gewährleistet. 
+################################################################################################
+field = qNoWay$F_DGSVO
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_DGSVO
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_DGSVO
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_DGSVO
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_DGSVO
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Der Schutz der Daten würde durch eine Datenschutzerklärung und die Datenschutzgrundverordnung gewährleistet.  ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+
+
+
+
+### Der Schutz der Daten würde durch technische Maßnahmen gewährleistet. 
+
+```{r F_Technisch, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Der Schutz der Daten würde durch technische Maßnahmen gewährleistet. 
+################################################################################################
+field = qNoWay$F_Technisch
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Technisch
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Technisch
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Technisch
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Technisch
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Der Schutz der Daten würde durch technische Maßnahmen gewährleistet.  ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+### Die App würde vom deutschen Bundesamt für Sicherheit in der Informationstechnik (BSI) auf Datensicherheit und Datenschutz überprüft. 
+
+```{r F_BSI, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Die App würde vom deutschen Bundesamt für Sicherheit in der Informationstechnik (BSI) auf Datensicherheit und Datenschutz überprüft. 
+################################################################################################
+field = qNoWay$F_BSI
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_BSI
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_BSI
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_BSI
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_BSI
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Die App würde vom deutschen Bundesamt für Sicherheit in der Informationstechnik (BSI) auf Datensicherheit und Datenschutz überprüft. ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+
+### Die App würde von unabhängigen SicherheitsexpertInnen auf Datensicherheit und Datenschutz überprüft. 
+
+```{r F_Experten, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Die App würde von unabhängigen SicherheitsexpertInnen auf Datensicherheit und Datenschutz überprüft. 
+################################################################################################
+field = qNoWay$F_Experten
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Experten
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Experten
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Experten
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Experten
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Die App würde von unabhängigen SicherheitsexpertInnen auf Datensicherheit und Datenschutz überprüft. ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+
+
+### Die App wäre Open Source. 
+
+```{r F_Open_Source, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Die App wäre Open Source. 
+################################################################################################
+field = qNoWay$F_Open_Source
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Open_Source
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Open_Source
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Open_Source
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Open_Source
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Die App wäre Open Source. ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+
+### Der Staat würde durch Gesetze, aber nicht durch technische Maßnahmen daran gehindert, die Daten für Überwachung zu missbrauchen. 
+
+```{r F_Gesetz_Nicht_Technisch, echo=FALSE, warning=FALSE, message=FALSE}
+
+#Der Staat würde durch Gesetze, aber nicht durch technische Maßnahmen daran gehindert, die Daten für Überwachung zu missbrauchen. 
+################################################################################################
+field = qNoWay$F_Gesetz_Nicht_Technisch
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pnw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf keinen Fall", "\n(n=", nrow(qNoWay),")", sep="")) + ylab("Anzahl (%)") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qProbNo$F_Gesetz_Nicht_Technisch
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppn_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich nicht", "\n(n=", nrow(qProbNo),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qUn$F_Gesetz_Nicht_Technisch
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pu_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Unentschieden", "\n(n=", nrow(qUn),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+field = qProbYes$F_Gesetz_Nicht_Technisch
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+ppy_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Wahrscheinlich", "\n(n=", nrow(qProbYes),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+field = qYesWay$F_Gesetz_Nicht_Technisch
+tmp = as.data.frame(table(field)/sum(table(field))*100)
+pyw_andere = ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab(paste("Auf jeden Fall", "\n(n=", nrow(qYesWay),")", sep="")) + ylab("") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+ 
+  
+
+grid.arrange(
+  pnw_andere,ppn_andere, pu_andere,ppy_andere,pyw_andere,
+  nrow = 1,
+  top = "Der Staat würde durch Gesetze, aber nicht durch technische Maßnahmen daran gehindert, die Daten für Überwachung zu missbrauchen. ",
+  bottom = textGrob(
+    " ",
+    gp = gpar(fontface = 3, fontsize = 9),
+    hjust = 1,
+    x = 1
+  )
+)
+
+################################################################################################
+
+```
+
+# Demografische Daten
+Im Folgenden sind die demografischen Daten der TeilnehmerInnen zusammengefasst.
+Zu Beginn des Fragebogens wurden den TeilnehmerInnen verschiedene Aussagen präsentiert. Sie wurden gebeten, die Aussagen zu markieren, welche ihrer Meinung nach auf die App zutreffen würden. Die Anzahl der Antworten sind in der Grafik "Mental Model" zusammengefasst.
+Zusätzlich dazu wurden die TeilnehmerInnen befragt, wo sie bereits Informationen über die App bekommen haben. Die Antworten sind in "Media Sources" dargestellt.
+
+Nach einer kurzen Erklärung der App wurde zudem gefragt, über welche technische Komponente die Nähe zu anderen Corona-Warn-App-Nutzenden gemessen wird. Die richtige Antwort "Bluetooth" war dabei im Text angegeben.
+
+```{r region, echo=FALSE, warning=FALSE, message=FALSE}
+
+agebreaks=c(18, 25, 35, 50, 65, 99)
+agetags=c("18-24","25-34","35-49","50-64","65-99")
+age_factor <- cut(q$age, 
+                  breaks=agebreaks, 
+                  include.lowest=TRUE, 
+                  right=FALSE, 
+                  labels=agetags)
+
+field = age_factor
+tmp = as.data.frame(table(field)/totalAll*100)
+ggplot(data=tmp, mapping=aes(x=field,y=Freq)) + 
+   geom_histogram(stat="identity", color="darkblue", fill="lightblue") +
+   xlab("Alter") + ylab("Anzahl") +
+   theme_minimal()
+
+
+field = q$region
+tmp = as.data.frame(table(field)/totalAll*100)
+ggplot(tmp, aes(x=field,y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab("Region") + ylab("Anzahl") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+field = q$smartphone
+tmp = as.data.frame(table(field)/totalAll*100)
+ggplot(tmp, aes(x=field,y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab("Smartphone") + ylab("Anzahl") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+field = q$income
+tmp = as.data.frame(table(field)/totalAll*100)
+ggplot(tmp, aes(x=field,y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab("Einkommen") + ylab("Anzahl") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+#Qualtrics additionfield = aes$Q98
+#tmp = as.data.frame(table(field)/totalAll*100)
+#ggplot(q, field(x=field, y=Freq))+
+#  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+#  theme_minimal() +
+#  xlab("Personen im Haushalt Qualtrics") + ylab("Anzahl") +
+#  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+field = q$Q91
+tmp = as.data.frame(table(field)/totalAll*100)
+ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab("Ausbildung") + ylab("Anzahl") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+attributes_df = q[,c("A_Nähe","A_Verpflichtend","A_Bluetooth","A_GPS","A_Spenden","A_Zeigen","A_Befinden","A_Privatsphäre","A_Grundrechte","A_Bekämpfen","A_Telefonnummer","A_Sicherheitsabstand","A_Temp","A_Fitness","A_Profil","A_Testen","A_Keine","A_WeissNicht")]
+attributes_colums = ldply(attributes_df, function(c) sum(c=="1"))
+
+field = attributes_colums
+field["V1"] = field["V1"]/totalAll*100
+ggplot(field, aes(x=.id, y=V1)) + 
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab("Mental Model") + ylab("Anzahl") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_x_discrete(drop=FALSE)+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+
+comprehension_df = q[,c("comp_bluetooth","comp_GPS","comp_WLAN","comp_Telefon")]
+comprehensions_colums = ldply(comprehension_df, function(c) sum(c=="1"))
+
+field = comprehensions_colums
+field["V1"] = field["V1"]/totalAll*100
+ggplot(field, aes(x=.id, y=V1)) + 
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab("Comprehension Check") + ylab("Anzahl") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+
+media_sources_df = q[,c("MS_FreundInnen","MS_Familie","MS_KollegInnen","MS_ÖffentlichRechtlicheSender","MS_Private_Sender","MS_Zeitungen","MS_SozialeMedien","MS_StaatlicheWebseiten","MS_OffizielleHomepage","MS_Webseiten","MS_WissenschaftlicheVeröffentlichungen","MS_Nichts","MS_WeißNicht")]
+media_sources_colums = ldply(media_sources_df, function(c) sum(c=="1"))
+
+field = media_sources_colums
+field["V1"] = field["V1"]/totalAll*100
+ggplot(field, aes(x=.id, y=V1)) + 
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab("Media Sources") + ylab("Anzahl") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  scale_y_continuous(limits=c(0,factors_y_axis_max),breaks=seq(0,factors_y_axis_max,factors_y_axis_stepsize))
+
+
+party_df=count(q, "party_preference")
+party_df$party_preference<-factor(party_df$party_preference, levels=party_df$party_preference[order(party_df$freq, decreasing=TRUE)])
+field = party_df
+field["freq"] = field["freq"]/totalAll*100
+ggplot(field,  aes(x = party_preference, y = freq)) +
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab("Partei") + ylab("Anzahl") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+field = q$job
+tmp = as.data.frame(table(field)/totalAll*100)
+ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab("Job") + ylab("Anzahl") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+field = q$tech
+tmp = as.data.frame(table(field)/totalAll*100)
+ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab("Spezielle Computerfähigkeiten") + ylab("Anzahl") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+field = q$finances
+tmp = as.data.frame(table(field)/totalAll*100)
+ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab("Auswirkung auf Finanzen") + ylab("Anzahl") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+field = q$trust_in_government
+tmp = as.data.frame(table(field)/totalAll*100)
+ggplot(tmp, aes(x=field, y=Freq))+
+  geom_bar(stat="identity", color="darkblue", fill="lightblue")+
+  theme_minimal() +
+  xlab("Vertrauen in die Regierung") + ylab("Anzahl") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+```
+
+############################## xxxxxx
+
