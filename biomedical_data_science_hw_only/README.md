@@ -78,11 +78,8 @@ plt.xlabel('TSNE1')
 plt.ylabel('TSNE2')
 plt.show()
 ```
-<div style="width: 60%; height: 60%">
-  
-  ![alt text](https://github.com/cuneyterem8/uni_bonn_background/blob/main/biomedical_data_science_hw_only/output3.png?raw=true)
-  
-</div>
+
+<img src="[https://your-image-url.type](https://github.com/cuneyterem8/uni_bonn_background/blob/main/biomedical_data_science_hw_only/output3.png?raw=true)" width="%60" height="%60">
 > output 3
 
 Example from exercise
