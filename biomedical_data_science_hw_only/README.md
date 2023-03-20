@@ -79,7 +79,7 @@ plt.ylabel('TSNE2')
 plt.show()
 ```
 
-<img src="[https://your-image-url.type](https://github.com/cuneyterem8/uni_bonn_background/blob/main/biomedical_data_science_hw_only/output3.png?raw=true)" width="100" height="100">
+<img src="[https://github.com/cuneyterem8/uni_bonn_background/blob/main/biomedical_data_science_hw_only/output3.png?raw=true]" width="100" height="100">
 > output 3
 
 Example from exercise
