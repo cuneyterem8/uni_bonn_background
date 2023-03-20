@@ -13,7 +13,6 @@ Being the best university in Germany in the field of mathematics, Uni of Bonn ha
 I took a total of 120 credits with a total of 14 courses and thesis+seminar from three different fields. All lecture details can be seen in files here with a summary of the content of each one of them
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/diplomas/bonn_diploma.JPEG?raw=true" width="60%" height="60%">
-> Diploma
 
 
 intelligence systems: artificial life, machine learning, neural networks, robot learning, cognitive robotics, cognitive robotics lab, humanoid robots lab, humanoid robots seminar
