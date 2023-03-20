@@ -17,7 +17,7 @@ I took a total of 120 credits with a total of 14 courses and thesis+seminar from
 
 intelligence systems: artificial life, machine learning, neural networks, robot learning, cognitive robotics, cognitive robotics lab, humanoid robots lab, humanoid robots seminar
 
-computer-vision-audio: deep_learning_for_visual_recognition, audio_signal_processing
+computer-vision-audio: deep learning for visual recognition, audio signal processing
 
 information systems: thesis in usable security and privacy, usable security and privacy, it security, sensor data fusion, mobile communication
 
