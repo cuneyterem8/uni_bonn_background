@@ -1,0 +1,10 @@
+{
+    "group": "11",
+    "message": "greer-heroes-grief-weierstrass-stickle",
+    "hmac": {
+        "md5": "84e25868179731be9950fc91bc76e04a",
+        "sha-1": "529f7fdd1f061cf444ec3beb5afd2989b61cd704",
+        "sha-256": "742ae37fa150c1c46bab7e9bd0fd4052b4da921394a6fc87e1d83acc14f7d32b",
+        "sha-512": "1528e71863d806d8aa56dd2f8ed3505db8af6063266c0e5bdbbe018f0ec348a5b1ef62a4d4949480472abb5e6db925c35f01b345c611dfe3e7dc6cd293e831f0"
+    }
+}

@@ -1,0 +1,28 @@
+First we use curl to access omnipollo:
+
+curl omnipollo.netsec.seclab-bonn.de/hmac/group-11
+
+Omnipollo's response looks like this:
+
+{"group": "11", "key": "p9qA1AHWDpmwIHFNEeColG6wEHjDI7rFO8N9o0bpkE4=", "message": "greer-heroes-grief-weierstrass-stickle"}
+
+Key: p9qA1AHWDpmwIHFNEeColG6wEHjDI7rFO8N9o0bpkE4=
+Message: greer-heroes-grief-weierstrass-stickle
+
+We note that the key is Base64 encoded and needs to be decoded accordingly.
+
+Then we use Key and Message to implement a custom HMAC algorithm 
+-> customhmac.py
+
+The script prints out all HMACs in the demanded notation, wich we manually store in a JSON-File 
+-> data.json
+
+Again, we use curl to post the JSON-File to omnipollo:
+
+curl -X POST -H "Content-Type: application/json" -d @data.json omnipollo.netsec.seclab-bonn.de/hmac/group-11
+
+Omnipollo accepts all HMACs and reveals his secret:
+
+{"flag": "netsec{6e0db90bd80c7a0624fe01dbce98109f2056a19303e27dac7397475f24d5c149}"}
+
+Secret: 6e0db90bd80c7a0624fe01dbce98109f2056a19303e27dac7397475f24d5c149

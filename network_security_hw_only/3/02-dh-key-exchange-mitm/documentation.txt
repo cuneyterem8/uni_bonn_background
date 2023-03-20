@@ -1,0 +1,5 @@
+Everything is commented in the source code (moderator.py), the secret is DONT_USE_THIS_FLAG.
+
+I have attached test.py, testoutput.txt such that it is clear that after the output shown before in all other files, there is no traffic anymore that could contain a secret, so the string above really should be the secret.
+
+I will upload a file in my last commit being the output in the terminal of moderator.py fitting with all the other files (except test.py, testoutput.py).

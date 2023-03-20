@@ -1,0 +1,39 @@
+You submitted sheet 1 while being in group 11.
+
++--------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Task   |   Points | Comment                                                                                                                                              |
++========+==========+======================================================================================================================================================+
+| 1      |     1.25 | You named some of your PCAPs wrong. Furthermore the tshark part is missing completely                                                                |
++--------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 2      |     1.25 | a)                                                                                                                                                   |
+|        |          | What do you mean by "red lines"?                                                                                                                     |
+|        |          |                                                                                                                                                      |
+|        |          | Whose username and password is transferred unencrypted?                                                                                              |
+|        |          |                                                                                                                                                      |
+|        |          | b)                                                                                                                                                   |
+|        |          | The password of pooradmin is not "hackH4ckhacK". As you can see from your output                                                                     |
+|        |          | the user who uses this password is "hackerman".                                                                                                      |
+|        |          |                                                                                                                                                      |
+|        |          | c)                                                                                                                                                   |
+|        |          | What about the unencrypted FTP connection?                                                                                                           |
+|        |          |                                                                                                                                                      |
+|        |          | d)                                                                                                                                                   |
+|        |          | In general you give good advice here, but do you really think that pooradmin is                                                                      |
+|        |          | using the FTP connection?                                                                                                                            |
++--------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 3      |     0.5  | So first of all, you can always write us an email if anything seems "strange" to you. Second, it's right the first server does not crash since it is |
+|        |          | using SYN cookies. You could have seen this in the pcap. Also the RST packets were probably the one send by your kernel and the answer to the        |
+|        |          | first question. We will discuss that in the exercise.                                                                                                |
++--------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 4      |     1.5  | 1. The clientDNSQuery name you should check for is 'malheur.netsec.seclab-bonn.de.'                                                                  |
+|        |          | and not 'malheur.netsec.seclab-bonn.de' (note the '.' at the end).                                                                                   |
+|        |          |                                                                                                                                                      |
+|        |          | 2. You are setting the wrong source IP. It should be the one of the DNS server and                                                                   |
+|        |          | not your own.                                                                                                                                        |
+|        |          |                                                                                                                                                      |
+|        |          | Fixing this should make your solution work.                                                                                                          |
++--------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 5      |     0    | [ HAS NO COMMITS BEFORE DEADLINE ]                                                                                                                   |
++--------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+| TOTAL  |     4.5  |                                                                                                                                                      |
++--------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------+

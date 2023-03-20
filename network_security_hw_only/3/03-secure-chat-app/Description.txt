@@ -1,0 +1,31 @@
+Tutorial:
+
+Both, server and client are set to connect to localhost on port 8081, wich can be edited in lines 17 and 18.
+
+Start server.py first, start client.py second.
+
+Type in messages and hit enter.
+
+Make sure to close both applications with an "exit" from either server or client. 
+
+
+Description:
+
+First, both applications generate two RSA key pairs.
+While the connection is established, all four public keys get exchanged.
+
+The first key pairs are used to encrypt/decrypt messages, using PKCS#1 v1.5 OAEP.
+This ensures confidentiality of the messages, since the messages can only be decrypted with the corresponding private keys.
+
+The second key pairs are used to sign/verify the SHA-256 hash of the encrypted messages, using PKCS#1 PSS RSA.
+This ensures both, integrity and origin of the messages.
+
+Manipulation of the encrypted messages would lead to a failure during the verification process, therefore the integrity of the messages is ensured.
+Only the legitimate owners (or in other words the creators) of the public keys, that are used for encryption, are able to sign messages correctly, therefore the origin of the messages is ensured aswell.
+However we must take the link between the public keys exchanged in the beginning and the real persons behind those keys as a precondition.
+
+A way to ensure that link would be, either the use of certificate authorities, wich of course is based on trust, 
+or a public key exchange on a piece of paper, wich of course is not very practical.
+Another way to make that connection would be the exchange of some secret, based on common experience or knowledge, within the chat appllication.
+
+All algorithms used for encryption, signing, hashing, random, etc. are from the pycrypto library.

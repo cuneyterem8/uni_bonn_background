@@ -1,0 +1,200 @@
+
+Tor and ProxyChains (3 points)
+
+
+Part 1
+Download the Tor Browser and the Tor sources. What are the respective components and differences?
+
+-Tor is a software to protect users' privacy for anonymous communicaition through the internet in which 
+contains thousands of the relays and network survailance. It has some different versions for adding 
+new features and different platforms. For example, orfox is a new alpha release for the android users 
+whereas different desktop versions are availabe. Tor browser is modified from mozilla which uses tor processes,
+traffic through tor network. It automatically erases the history and has a onion service feature to connect
+websites under survailance which is accessible from here. 
+
+
+
+Part 2
+Compile the Tor sources, and install the program. How can a software
+access the Tor network?
+
+-Tor software can hide user's activities from traffic track and surveillance by implementing onion routing.
+SOCKS of the tor instance is listening on TCP port 9050 at the local host. Tor creates circuits time to time
+through tor network like onion-route into the destination. Through the circuit, traffic is sent from router 
+to router and tor source connects to the tor network. After that, it rondomly creates communications of relay
+networks around the world. It encryptes multi layered manner and provide perfect forward secracy between relays.
+Exit node is the communicator for the browsing. 
+
+Jun 12 17:13:48.133 [notice] Opening Socks listener on 127.0.0.1:9050
+Jun 12 17:13:48.134 [notice] Opened Socks listener on 127.0.0.1:9050
+Jun 12 17:13:48.000 [notice] Parsing GEOIP IPv4 file /usr/local/share/tor/geoip.
+Jun 12 17:13:48.000 [notice] Parsing GEOIP IPv6 file /usr/local/share/tor/geoip6.
+Jun 12 17:13:48.000 [notice] Bootstrapped 0% (starting): Starting
+Jun 12 17:13:49.000 [notice] Starting with guard context "default"
+Jun 12 17:13:49.000 [notice] Bootstrapped 5% (conn): Connecting to a relay
+Jun 12 17:13:49.000 [notice] Bootstrapped 10% (conn_done): Connected to a relay
+Jun 12 17:13:49.000 [notice] Bootstrapped 14% (handshake): Handshaking with a relay
+Jun 12 17:13:49.000 [notice] Bootstrapped 15% (handshake_done): Handshake with a relay done
+Jun 12 17:13:49.000 [notice] Bootstrapped 75% (enough_dirinfo): Loaded enough directory info to build circuits
+Jun 12 17:13:49.000 [notice] Bootstrapped 90% (ap_handshake_done): Handshake finished with a relay to build circuits
+Jun 12 17:13:49.000 [notice] Bootstrapped 95% (circuit_create): Establishing a Tor circuit
+Jun 12 17:13:50.000 [notice] Bootstrapped 100% (done): Done
+
+
+
+Part 3
+How is DNS resolution handled in the Tor Browser and in the installation version of the Tor software?
+
+-For the tor, using SOCKS (SOCKS4, 5, 4a) protocol directly is a way to handle dns resolution. 
+If application speaks, SOCKS 4a is useful in which it always uses hostnames. Tor browser is patched by 
+the dns service and removed the dns lookup for the profile lock signiture. Tor network is not bypassed 
+and always uses 127.0.0.1 for the IP address portion of the lock signiture and web browser tells 
+the http proxy to communicate with tor by SOCKS.  
+
+
+
+Part 4
+Download the tool proxychains and execute browser sessions over it. Compare the activities of a Firefox 
+or Chrome Browser with the ones of the Min Browser!
+
+-After I installed proxychains and browsers, the activities are a bit different from each other. 
+"$ proxychains firefox duckduckgo.com" and "$ proxychains min duckduckgo.com". For example, 
+going duckduckgo website through firefox and min browsers, "min" did more less dns requests and S-chains. 
+Because firefox has some services, stored sessions and background operations for the user, it creates 
+more s-chains, dns request and responses.  
+
+
+$ proxychains firefox duckduckgo.com
+ProxyChains-3.1 (http://proxychains.sf.net)
+|DNS-request| detectportal.firefox.com 
+|S-chain|-<>-127.0.0.1:9050-<><>-4.2.2.2:53-<><>-OK
+|DNS-response| detectportal.firefox.com is 95.101.72.209
+|S-chain|-<>-127.0.0.1:9050-<><>-95.101.72.209:80-|DNS-request| duckduckgo.com 
+|S-chain|-<>-127.0.0.1:9050-<><>-4.2.2.2:53-|DNS-request| push.services.mozilla.com 
+|S-chain|-<>-127.0.0.1:9050-<><>-4.2.2.2:53-|DNS-request| tiles.services.mozilla.com 
+<><>-OK
+|S-chain|-<>-127.0.0.1:9050-<><>-4.2.2.2:53-<><>-OK
+|DNS-request| snippets.cdn.mozilla.net 
+|S-chain|-<>-127.0.0.1:9050-<><>-4.2.2.2:53-<><>-OK
+<><>-OK
+<><>-OK
+|DNS-response| duckduckgo.com is 79.125.105.113
+|S-chain|-<>-127.0.0.1:9050-<><>-79.125.105.113:443-|DNS-response| push.services.mozilla.com is 34.208.71.43
+|DNS-request| push.services.mozilla.com 
+|S-chain|-<>-127.0.0.1:9050-<><>-4.2.2.2:53-|DNS-response| tiles.services.mozilla.com is 54.186.163.246
+|DNS-response| snippets.cdn.mozilla.net is 99.86.1.62
+<><>-OK
+|S-chain|-<>-127.0.0.1:9050-<><>-54.186.163.246:443-<><>-OK
+<><>-OK
+|S-chain|-<>-127.0.0.1:9050-<><>-99.86.1.62:443-|DNS-response| push.services.mozilla.com is 52.35.236.192
+<><>-OK
+|S-chain|-<>-127.0.0.1:9050-<><>-52.35.236.192:443-<><>-OK
+|DNS-request| ocsp.digicert.com 
+|S-chain|-<>-127.0.0.1:9050-<><>-4.2.2.2:53-<><>-OK
+|DNS-request| improving.duckduckgo.com 
+|S-chain|-<>-127.0.0.1:9050-<><>-4.2.2.2:53-|DNS-response| ocsp.digicert.com is 93.184.220.29
+|S-chain|-<>-127.0.0.1:9050-<><>-93.184.220.29:80-<><>-OK
+<><>-OK
+|S-chain|-<>-127.0.0.1:9050-<><>-93.184.220.29:80-|DNS-response| improving.duckduckgo.com is 79.125.105.113
+<><>-OK
+|S-chain|-<>-127.0.0.1:9050-<><>-79.125.105.113:443-<><>-OK
+|S-chain|-<>-127.0.0.1:9050-<><>-79.125.105.113:443-<><>-OK
+|S-chain|-<>-127.0.0.1:9050-<><>-79.125.105.113:443-<><>-OK
+
+
+$ proxychains min duckduckgo.com
+ProxyChains-3.1 (http://proxychains.sf.net)
+|DNS-request| duckduckgo.com 
+|S-chain|-<>-127.0.0.1:9050-<><>-4.2.2.2:53-<><>-OK
+|DNS-response| duckduckgo.com is 176.34.155.23
+|S-chain|-<>-127.0.0.1:9050-<><>-176.34.155.23:443-<><>-OK
+|DNS-request| improving.duckduckgo.com 
+|S-chain|-<>-127.0.0.1:9050-<><>-4.2.2.2:53-<><>-OK
+|DNS-response| improving.duckduckgo.com is 46.51.179.90
+|S-chain|-<>-127.0.0.1:9050-<><>-46.51.179.90:443-<><>-OK
+|S-chain|-<>-127.0.0.1:9050-<><>-46.51.179.90:443-<><>-OK
+|S-chain|-<>-127.0.0.1:9050-<><>-46.51.179.90:443-<><>-OK
+|S-chain|-<>-127.0.0.1:9050-<><>-46.51.179.90:443-<><>-OK
+|S-chain|-<>-127.0.0.1:9050-<><>-46.51.179.90:443-<><>-OK
+|S-chain|-<>-127.0.0.1:9050-<><>-46.51.179.90:443-<><>-OK
+
+
+
+Part 5
+Enhance the use of the Tor network by adding additional proxy relays!
+Which configuration seems to work best?
+
+-Adding additional relay can be done by bridges. I can request bridge from torproject.org and it gave me 
+these two bridges; obfs4 185.225.17.46:38809 1A0FD....  and obfs4 87.155.198.73:8080 B16F5... where obfs4 
+is name of the pluggable transport, respectively, ip address, port number and fingerprint. We can select
+several bridges like obfs4, obfs3 and meek-azure in which have some protections. For example, meek-azure
+is for people who live in china, others are safe pluggable transport in which obfs4 is latest one and works best. adding more than one relay also can be done by torrc, for example MyFamily config can be added as MyFamily $fingerprint1,$fingerprint2 which is similar. 
+
+
+
+Part 6
+What is the main challenge of the enhanced circuits? Which parameters can be optimized for the different 
+browsers to improve the performance?
+
+-Onion routing built different circuit for all application level request resulted in multiple public key 
+operations. So many circuits is not good for the anonumity, so tor multiplexes tcp streams along each 
+circuit and efficiency is hard. adding forward secrecy, integrity checking, congestion control etc are 
+challenges for low latency anonymous communicaiton service. New onion routing design has many improvements 
+over circuit efficiency than the old one. Some parameters are congestion control, many tcp stream in one 
+circuit, directory servers and veriable exit policy changes improve the performance. 
+
+
+
+Part 7
+Execute a nmap scan over the Tor network and an additional proxy. Which parameters work, which don't?
+
+-sT is full TCP connect scan, -PN host discovery is not shown, -n DNS resolution will not be executed 
+to avoid dns leaks, -sV is service version and -p is a port number. -sT full connect must be used whereas
+others can be optional. Here, we are connecting to the host number 80.14.163.161 from tor default port
+127.0.0.1:9050 in proxychain config file;
+
+$ proxychains nmap -sT -PN -n -sV -p 80,443,21,22 80.14.163.161
+ProxyChains-3.1 (http://proxychains.sf.net)
+
+Starting Nmap 7.60 ( https://nmap.org ) at 2019-06-12 16:41 CEST
+|S-chain|-<>-127.0.0.1:9050-<><>-80.14.163.161:22-<--timeout
+|S-chain|-<>-127.0.0.1:9050-<><>-80.14.163.161:80-<--timeout
+|S-chain|-<>-127.0.0.1:9050-<><>-80.14.163.161:443-<--timeout
+|S-chain|-<>-127.0.0.1:9050-<><>-80.14.163.161:21-<--timeout
+Nmap scan report for 80.14.163.161
+Host is up (15s latency).
+
+PORT    STATE  SERVICE VERSION
+21/tcp  closed ftp
+22/tcp  closed ssh
+80/tcp  closed http
+443/tcp closed https
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 61.40 seconds
+
+-If we do not use -n in which show the dns response, one of output is like this;
+
+Starting Nmap 7.60 ( https://nmap.org ) at 2019-06-12 16:51 CEST
+|DNS-request| 80,443,21,22 
+|S-chain|-<>-127.0.0.1:9050-<><>-4.2.2.2:53-<><>-OK
+|DNS-response|: 80,443,21,22 does not exist
+
+-So parameters are mostly work but sometimes dns resolution may not work because there may be dns leak. 
+-The proxy scan is slower than normal scan (without tor)
+
+
+
+Part 8
+Resolve an address via the bash and proxychains. How it is implemented?
+What may has to be fixed and what are respective possibilities?
+
+-By using $ proxyresolv duckduckgo.com, it can resolve the dns host name via proxy or tor. 
+It can be specified by etc/proxychains.conf  Proxy server can be added into proxychains and dns server
+can be changed as different posibilities.
+
+
+
+References
+
+1- https://2019.www.torproject.org/projects/torbrowser/design/#adversary

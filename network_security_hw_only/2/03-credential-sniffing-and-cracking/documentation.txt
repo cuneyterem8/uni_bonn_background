@@ -1,0 +1,29 @@
+Regarding this exercise I have some questions: why does my sniffer not work wit the count command? As to be seen in the pcap file it lacks important content, if I delete the count command instead, everything works fine, but of course the programm will not terminate after 5 minutes so I have to stp in in the console, not such nice. Maybe, you can explain.
+
+Now to the solution of this exercise:
+Part1:
+Using the command "nmap mikkeller.netsec.seclab-bonn.de" we see that the IP with respect to this URL is 10.3.3.59.
+Using the command "tshark -w tshark.pcap host 10.3.3.59" we get the pcap file tshark.pcap which we use to analyse the authentification methodes; table:
+
+source host | subpage/path | authentification method | user | password
+mikkeller.netsec.seclab-bonn.de | /part1/ | Basic | jan | superman123
+mikkeller.netsec.seclab-bonn.de | /better-than-part-1/ | Digest | martin | 1q1q1q1q1q
+mikkeller.netsec.seclab-bonn.de | /next-try/ | API-Key Authentification | ---- | 5e8dab37359f2846b670321afedef19b |
+mikkeller.netsec.seclab-bonn.de | /tokens-to-the-rescue/ | Bearer | ---- | ---- 
+mikkeller.netsec.seclab-bonn.de | /obscurity-for-the-win/ | Security through obscurity | ---- | ----
+
+Note: we got the password of martin by using betterthanpart1.py where rockyou.txt is some file with often used passwords.
+Note: for Bearer there is no password or username but a shared token that is used for authentification: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NTc5NDc1NzIsInRlYW0iOiJOZXRTZWMiLCJhZG1pbiI6dHJ1ZSwic3ViIjoibWFyaWlhIn0.qkYzzyimVjStGozmlUvOpAYEabSZ6ZGW0ZEaEvU18NE
+
+Part2:
+Basic is completely insecure as the username and the password is not hidden, so they can be stolen and used by the attacker, the same holds for API-Key authentification with the key and for Bearer with the token used for authentification. Security through obscurity is completly insecure. As shown we find the hidden stuff and as nothing is encrypted or authentificated... unsecure. Digest is secure when used with hard random password and if the used hash function is a cryptocraphic one. They all even bad implemented are better than nothing, so they can be used, but better just to use Digest or one of the following schemes which have not been used in this task before:
+
+Examples of could authentification schemes are the RSA signature scheme or even better the ElGamal signature scheme. Both use hardness of computation of mathematical problems to hide information. In the following we are going to explain the RSA method shortly:
+
+Let p,q be some large primes, and pick sk,pk in (Z mod (p-1)*(q-1))= multipl subgroup of (Z mod p*q) with sk*pk = 1 in (Z mod (p-1)*(q-1)) by use of the Extended Euclidean Algorithm. This is the key generation. Now, the sender has the primes p,q, a private key sk and a public pk, where the receiver knows pq (ONLY the product) and pk as well as that pk really belongs to the sender.
+Let h be a cryptocraphic hashfunction from the message space to (Z mod n).
+
+Now the sender authentificates himself by signing each message m he sends with outputting not only m, but (m,s), where s = h(m)^sk mod (pq).
+The receiver checks m == s^pk mod (pq), in case of equality the sender has authentificated successfull.
+
+

@@ -1,0 +1,16 @@
+This is the documentation for exercise 1:
+
+Using the command "curl -o caldoz.html http://caldolzburger.xxe.netsec.seclab-bonn.de" we get the file cadolz.html, which suggests that it is a good idea to scan for adresses of the form ...xxe.netsec.seclab-bonn.de.
+
+Using the command "nmap -oN nmap.txt 10.3.3.60-80" we scanned the IPs from 10.3.3.60 to 10.3.3.80 and stored the data in the file nmap.txt.
+While a week ago, when I tried all this, the only open ports belonged to the IPs 10.3.3.70 and 10.3.3.71, now there are 4 additional IPs with open ports which we therefore will not consider.
+The IP 10.3.370 belongs to the server we should hack, so we try our best to get more information about the server with IP 10.3.3.71, which has a URL of type schlenkerla.xxe.netsec.seclab-bonn.de, so the server belonging to that IP can communicate with our original server of interest.
+
+Using the command "curl -o schlenker.html http://schlenkerla.xxe.netsec.seclab-bonn.de" we get the information that we can download a xml file form that server and upload the modified one, interesting as we want to perform a xml attack.
+
+Uisng the command "curl -o orig-reg-template.xml https://schlenkerla.xxe.netsec.seclab-bonn.de" we get the xml file to modify in the following, where the server after sending it back, gives out the names for us (which we see doing the following attack or  playing a bit around before).
+Doing this we start to look for the passwords of this server, so we try to read out the password and header files by using to command "curl -o pwsdschlenker.html -H "Content-Type:text/xml" -X POST -d @reg-template.xml https://schlenkerla.xxe.netsec.seclab-bonn.de" and reg-template being modified, we get the file pwsdschlenker.html, where is shown that this server does not store any passwords. 
+
+This yields the intuiton that with respect to the connection of both servers no authentifaction or something is just, they just check IP-adresses. So a xml attack where we force schlenker to read the desired file of cadolz should work. We do this by using the command  "curl -o secret.html -H "Content-Type:text/xml" -X POST @reg-template2.xml https://schlenkerla.xxe.netsec.seclab-bonn.de" and get the secret, which is contained in the brackets {} and is:
+
+457032366fcae26c23664a5d5067e5dd7260960fe3caac1dc1bed564883c5f4b

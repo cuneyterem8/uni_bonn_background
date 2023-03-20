@@ -1,0 +1,200 @@
+s6jascug@netsec-vm-11:~/sheet3/ex2$ sudo python3 moderator.py 
+starting a talk with alvinne
+- establishing the connection to alvinne
+- receiving a dh key exchange file from alvinne
+b'{"mtype": "DH-key-exchange", "dhparams": {"p": "0x308201080282010100d64369d97a534b9ea1d5e5109feb8ce98c62b9a8a3c01dc6364dfdf6c9bb67956f0f008248b89ed60ff20e6f8a213757b16cf3dd5b905380d9ec95e10989dede1ae2289b3ae090f9a07a2031d8bde3ae7b9d9030c60e994abb5c20a3dec4dc0f4075d05924ee79dc35fd52817f6fb995136a7c2f56e9cf959c5bd6817ec3207f808088ca8d0c73cc54e6969303206892a087abc6a348bb9c836612b328dd4a63ff47e698e48b718ff4155b6a383e736b022e2e9e06b478acd1e477d52ba066300e2247fd8e7d854d7f3c6ed349efd29bd75bf3e0e325a4ec36a7892c1efbf63110410e20bea36a543ef1bc634552600b456f81e5a35ff8de544e1ca2db31ebeb020102", "g": "0x2", "public_alvinne": "0x256a34cb04ca4599779229eeebef9cdda23776040982a8c2852d5ec3f21a527f535f3c1a8d4c0d20723120bd7f73290170d7a72e458035b209201179c21af0527417e5369f195e624437419ac41c2e4e74b7dd615b7e50700c540cead9b6cc707b564fc96fa625afa4269b39aa9bcb913c7bd04eabc5efcd9b5d973c4f085bdc5e2f7c963d0fc10986f92f100000fb7d979d636414dbd0d1e53a6a4e5df05782a487f3e2e6c7cf0bf54f203d92e03e33f22501ff29cc01f63427d44262b2abe67fa6f7614290959024d65c1acddf0db0e8d978d3b4a38fb6c609691ca743401adaba66d957ee6454c5116440507ed9c9926b06f1a8ca5ca1093d0322951910faae079dfc87d7e6db40a4c0dc"}}'
+- sending a dh key exchange file to alvinne
+- receiving the secret file from alvinne
+b"\x08\x15s\xc2\xc4\xa8\x8b\x1f%1\xcfA\x9e\xfcP\xc7\x07\xaa\x89E\xb7\xb5\xd2\xcd\x8br\x8ftFg\x83\xef\xff\xce\xdc\x86Fi\xd6~\xf8\x19O\xc4l ]<\xee\xe5zJ\xd1\xd2\xbe,\xa9jp\x97PMl\x175\xff\x81y\xda\x83\x82'\x8e\xc1\xe71\xf2-\x02\xf0,\xd0\x9c\x82\xb8\xd4\xda\xcc\x99\x1b\xbe\xfc\x9c\xe8\xcd\xde\xe8\x98\xbel\x88-\x1fF7GF)\xb7\xdf\xe6<\x17\x06\xd4\x01\xc5\xb9\x8d\x01\x17\xb8Ua;\x93\x81\xaa\xb7\x8fu\xa3\xd8\xc5Jd\x81\xf7n|\x1a\xb7\xd8\xd2\x196\xf8\xb4\x0b\x8aP\x0f7\xb6t"
+
+decrpyting the encoded message of alvinne
+- reading the encrypted secret out of the file
+- the nonce is:
+b'\x08\x15s\xc2\xc4\xa8\x8b\x1f'
+- the ciphertext is:
+b"%1\xcfA\x9e\xfcP\xc7\x07\xaa\x89E\xb7\xb5\xd2\xcd\x8br\x8ftFg\x83\xef\xff\xce\xdc\x86Fi\xd6~\xf8\x19O\xc4l ]<\xee\xe5zJ\xd1\xd2\xbe,\xa9jp\x97PMl\x175\xff\x81y\xda\x83\x82'\x8e\xc1\xe71\xf2-\x02\xf0,\xd0\x9c\x82\xb8\xd4\xda\xcc\x99\x1b\xbe\xfc\x9c\xe8\xcd\xde\xe8\x98\xbel\x88-\x1fF7GF)\xb7\xdf\xe6<\x17\x06\xd4\x01\xc5\xb9\x8d\x01\x17\xb8Ua;\x93\x81\xaa\xb7\x8fu\xa3\xd8\xc5Jd\x81\xf7n|\x1a\xb7\xd8\xd2\x196\xf8\xb4\x0b\x8aP\x0f7\xb6t"
+- calculating the exchanged key
+- the exchanged key is (ascii encoded):
+0x256a34cb04ca4599779229eeebef9cdda23776040982a8c2852d5ec3f21a527f535f3c1a8d4c0d20723120bd7f73290170d7a72e458035b209201179c21af0527417e5369f195e624437419ac41c2e4e74b7dd615b7e50700c540cead9b6cc707b564fc96fa625afa4269b39aa9bcb913c7bd04eabc5efcd9b5d973c4f085bdc5e2f7c963d0fc10986f92f100000fb7d979d636414dbd0d1e53a6a4e5df05782a487f3e2e6c7cf0bf54f203d92e03e33f22501ff29cc01f63427d44262b2abe67fa6f7614290959024d65c1acddf0db0e8d978d3b4a38fb6c609691ca743401adaba66d957ee6454c5116440507ed9c9926b06f1a8ca5ca1093d0322951910faae079dfc87d7e6db40a4c0dc
+- the exchanged key is (int encoded):
+374209627205557159469425207031868793729495646967732326064757966866196096044039096917957123682388784040775389038430027757072362497563396398742095733154915314790231597139001608376143770589955473463379257783456944750680914828018507205354070568843825723996128086469270681785417363875078078663102463438210552176005493992414125773178991690313980321014072558888426936474771259967980040338537465590074919220349435476081441405524564790302940614202971562923644725002313872118649332196228512268803320965506462563421489685271058436194249510804479285148746793787740059612921240267039367506028294486410825817346802018568365345478244774665729734790516381630684
+- the exchanged key is (completly in hex):
+b'%j4\xcb\x04\xcaE\x99w\x92)\xee\xeb\xef\x9c\xdd\xa27v\x04\t\x82\xa8\xc2\x85-^\xc3\xf2\x1aR\x7fS_<\x1a\x8dL\r r1 \xbd\x7fs)\x01p\xd7\xa7.E\x805\xb2\t \x11y\xc2\x1a\xf0Rt\x17\xe56\x9f\x19^bD7A\x9a\xc4\x1c.Nt\xb7\xdda[~Pp\x0cT\x0c\xea\xd9\xb6\xccp{VO\xc9o\xa6%\xaf\xa4&\x9b9\xaa\x9b\xcb\x91<{\xd0N\xab\xc5\xef\xcd\x9b]\x97<O\x08[\xdc^/|\x96=\x0f\xc1\t\x86\xf9/\x10\x00\x00\xfb}\x97\x9dcd\x14\xdb\xd0\xd1\xe5:jN]\xf0W\x82\xa4\x87\xf3\xe2\xe6\xc7\xcf\x0b\xf5O =\x92\xe0>3\xf2%\x01\xff)\xcc\x01\xf64\'\xd4Bb\xb2\xab\xe6\x7f\xa6\xf7aB\x90\x95\x90$\xd6\\\x1a\xcd\xdf\r\xb0\xe8\xd9x\xd3\xb4\xa3\x8f\xb6\xc6\ti\x1c\xa7C@\x1a\xda\xbaf\xd9W\xeedT\xc5\x11d@P~\xd9\xc9\x92k\x06\xf1\xa8\xca\\\xa1\t=\x03"\x95\x19\x10\xfa\xae\x07\x9d\xfc\x87\xd7\xe6\xdb@\xa4\xc0\xdc'
+- the shortened key is:
+b'%j4\xcb\x04\xcaE\x99w\x92)\xee\xeb\xef\x9c\xdd\xa27v\x04\t\x82\xa8\xc2\x85-^\xc3\xf2\x1aR\x7f'
+- decrypting the plaintext
+- the plaintext is:
+b'{"netsec-group": 0, "mtype": "auth-request", "challenge_response": {"request": "e634150a24c186b9ea5527824b042cedcf25b4f60d25a11a31d1117c836a509e"}}'
+
+
+starting a talk with founders
+- establishing a connection to founders
+- sending a dh key exchange file to founders
+- receiving a dh key change file from founders
+b'{"mtype": "dh-key-exchange", "dhparams": {"public_founders": "0x27df8693c4d6f69816c5dc9ed22dbd5ce463880c38a2d082da04c39de9335d051d2c7400a03c0cb6cb56ccd7ad628ff670da3d0ca534a52a6434bb61d9b98994e80d63f77158ebe473755f83a751a49bdd9d17cbcb0842f940c1a8ac6a912b869b9c71a61852ed59474c404ff6dd797fe75edf9e18dbd810c8be2b0e7102bcd75a7c3881db205adbc1caf4247a60cd8d79fde34d87d8d7ef6790a673a5cfcd80d6c06a0016f75930518acd39665be93d1c93e4fa6a03e5acb5068f5179ebb2106d9766c3bfc32f8bed89c97018c896760a87eefa4e434e5d32f0ffd91cde15eb6a734728590c924fc8ed5c53edc5812bcf55b28be4485b5c0e452919e3d932143fc32d4d987921ba8e2eeaaa"}}'
+
+encrypting the decrypted message of alvinne
+- reading plaintext of the encrypted message sent by alvinne
+- calculating the exchanged key
+- the exchanged key is (ascii encoded):
+0x27df8693c4d6f69816c5dc9ed22dbd5ce463880c38a2d082da04c39de9335d051d2c7400a03c0cb6cb56ccd7ad628ff670da3d0ca534a52a6434bb61d9b98994e80d63f77158ebe473755f83a751a49bdd9d17cbcb0842f940c1a8ac6a912b869b9c71a61852ed59474c404ff6dd797fe75edf9e18dbd810c8be2b0e7102bcd75a7c3881db205adbc1caf4247a60cd8d79fde34d87d8d7ef6790a673a5cfcd80d6c06a0016f75930518acd39665be93d1c93e4fa6a03e5acb5068f5179ebb2106d9766c3bfc32f8bed89c97018c896760a87eefa4e434e5d32f0ffd91cde15eb6a734728590c924fc8ed5c53edc5812bcf55b28be4485b5c0e452919e3d932143fc32d4d987921ba8e2eeaaa
+- the exchanged key is (int encoded):
+398796423373804063883227159443027990103303605134631667677344182451027493855372727823833335111438213991778105706315627765023488498063286928585387841383509622533552277480972129057926907353729805900488434890201271419376945084505769370100800806746092214932530280391039812438765506485424944002609932058354900903464310999393445364973711842197957939741395222265000292256765186955215126965001564010622026957987885898172269374825306724629904343157968945882624222149280653805745220617896596637121851563541721557192224029471604659344296111381464411388192305628692750464036090333938132329176062384877019296811540860887621902382055690063419620555929584331434
+- the exchanged key is (completly in hex):
+b"'\xdf\x86\x93\xc4\xd6\xf6\x98\x16\xc5\xdc\x9e\xd2-\xbd\\\xe4c\x88\x0c8\xa2\xd0\x82\xda\x04\xc3\x9d\xe93]\x05\x1d,t\x00\xa0<\x0c\xb6\xcbV\xcc\xd7\xadb\x8f\xf6p\xda=\x0c\xa54\xa5*d4\xbba\xd9\xb9\x89\x94\xe8\rc\xf7qX\xeb\xe4su_\x83\xa7Q\xa4\x9b\xdd\x9d\x17\xcb\xcb\x08B\xf9@\xc1\xa8\xacj\x91+\x86\x9b\x9cq\xa6\x18R\xedYGL@O\xf6\xddy\x7f\xe7^\xdf\x9e\x18\xdb\xd8\x10\xc8\xbe+\x0eq\x02\xbc\xd7Z|8\x81\xdb Z\xdb\xc1\xca\xf4$z`\xcd\x8dy\xfd\xe3M\x87\xd8\xd7\xefg\x90\xa6s\xa5\xcf\xcd\x80\xd6\xc0j\x00\x16\xf7Y0Q\x8a\xcd9f[\xe9=\x1c\x93\xe4\xfaj\x03\xe5\xac\xb5\x06\x8fQy\xeb\xb2\x10m\x97f\xc3\xbf\xc3/\x8b\xed\x89\xc9p\x18\xc8\x96v\n\x87\xee\xfaNCN]2\xf0\xff\xd9\x1c\xde\x15\xebjsG(Y\x0c\x92O\xc8\xed\\S\xed\xc5\x81+\xcfU\xb2\x8b\xe4H[\\\x0eE)\x19\xe3\xd92\x14?\xc3-M\x98y!\xba\x8e.\xea\xaa"
+- the shortened key is:
+b"'\xdf\x86\x93\xc4\xd6\xf6\x98\x16\xc5\xdc\x9e\xd2-\xbd\\\xe4c\x88\x0c8\xa2\xd0\x82\xda\x04\xc3\x9d\xe93]\x05"
+- encrypting the plaintext
+- the encrypted plaintext is:
+b'01234567\x9e\x87\x1d TH\n{\xea-\xf1\xa9q0\xa3V\xc4\xff\x12\xe0F\xf9\xff\n\xe4z\x14\xa0MZp\x1f\xe0\x1c\x07E\x88\xb2y\xc3,\x03\x01\x99\xec\xed\\\x14\x9b\xa8o\xe7WKW\xbc}\xad\xbc\x89\x86\x94\xb8KP/\x1bs\xaf\x8a\xf1p\r\xc0\x00c#2\xc8i\xf7\x1a\xffV\xd1\xf2\x03\xddD\x94\x84\xfb\xd8\x13\xa0\xd3d~\x00T\xdd\x00\xd0N\xba\xf1\xdc\x1e\x06\x96sB5&\x9c4M\x8a\x17\x95\x9c\xa0\x96|\xbf\xb8\xef\x1e\xaem\x9c\x07\xcf\xbaO\xce\xef3;$\x8c\x1c\x92\xf4\xd6\x07\xb8'
+sending the for founders encrypted message from alvinne
+- receiving a message from founders
+b"\xa1\x13Bn\x90D\x1f\x8b\x7f\xc0\x8aI\xf0\x12i\x0c\x16\xe2q\xdc\x18\xaa\xd36\xebL\xae\xa3\xa9\xbd(`\xb1X\xb5\x95\xf5>I\x0bG\xa2\xc7\xe4\xbf\x19\xf0\x03J8Pu\xd3\xe7&hy\xdc\x15\xe7\xc1O\x8c\xb1C\xf71\x19\xcf\x1c!\x06\xe4\xb0!\xe6\xae\x12\xd4G\xdfG\x98\xae\x0b\xd9%eS\xfa\x94\xf4\xe0l\x0f\xd8\xdf\x9cz|\x19\xfd|[\x1aD\xe8z{\xe2\xd6\x06\x0c\x9a\xba\xf0#\xd0\xd4h\x1b\xfcz-\x190\x9d\x8e\xe9(\xcel8)|\xbe\xb0X9\xf77 ME\xbeOT\xdf@\xe5\xda\xdau\xba7H\x0e\\\xbb\xfc\xd8\x85\xf4z4<\xa6]a\xc6\x9fJm7\xbcq\xdf\xc4-*Fo\\n'G\x06\xa1\xf3\x034\x943\xe1v\x0e\xb9\xeex\xb1Y\xd6\x10\xfa\xfe\xed\xda>\xc0\xba\x92\xe1\xe5\xcf\xa8\x01\x1dEo\x8fSv\xb2\x0cl\xcf\xea\xa6J\ny\xfb\xb5(;\xb6"
+
+decrypting the encoded message of founders
+- reading the encrypted secret out of the file
+- the nonce is:
+b'\xa1\x13Bn\x90D\x1f\x8b'
+- the ciphertext is:
+b"\x7f\xc0\x8aI\xf0\x12i\x0c\x16\xe2q\xdc\x18\xaa\xd36\xebL\xae\xa3\xa9\xbd(`\xb1X\xb5\x95\xf5>I\x0bG\xa2\xc7\xe4\xbf\x19\xf0\x03J8Pu\xd3\xe7&hy\xdc\x15\xe7\xc1O\x8c\xb1C\xf71\x19\xcf\x1c!\x06\xe4\xb0!\xe6\xae\x12\xd4G\xdfG\x98\xae\x0b\xd9%eS\xfa\x94\xf4\xe0l\x0f\xd8\xdf\x9cz|\x19\xfd|[\x1aD\xe8z{\xe2\xd6\x06\x0c\x9a\xba\xf0#\xd0\xd4h\x1b\xfcz-\x190\x9d\x8e\xe9(\xcel8)|\xbe\xb0X9\xf77 ME\xbeOT\xdf@\xe5\xda\xdau\xba7H\x0e\\\xbb\xfc\xd8\x85\xf4z4<\xa6]a\xc6\x9fJm7\xbcq\xdf\xc4-*Fo\\n'G\x06\xa1\xf3\x034\x943\xe1v\x0e\xb9\xeex\xb1Y\xd6\x10\xfa\xfe\xed\xda>\xc0\xba\x92\xe1\xe5\xcf\xa8\x01\x1dEo\x8fSv\xb2\x0cl\xcf\xea\xa6J\ny\xfb\xb5(;\xb6"
+- calculating the exchanged key
+- the exchanged key is (ascii encoded):
+0x27df8693c4d6f69816c5dc9ed22dbd5ce463880c38a2d082da04c39de9335d051d2c7400a03c0cb6cb56ccd7ad628ff670da3d0ca534a52a6434bb61d9b98994e80d63f77158ebe473755f83a751a49bdd9d17cbcb0842f940c1a8ac6a912b869b9c71a61852ed59474c404ff6dd797fe75edf9e18dbd810c8be2b0e7102bcd75a7c3881db205adbc1caf4247a60cd8d79fde34d87d8d7ef6790a673a5cfcd80d6c06a0016f75930518acd39665be93d1c93e4fa6a03e5acb5068f5179ebb2106d9766c3bfc32f8bed89c97018c896760a87eefa4e434e5d32f0ffd91cde15eb6a734728590c924fc8ed5c53edc5812bcf55b28be4485b5c0e452919e3d932143fc32d4d987921ba8e2eeaaa
+- the exchanged key is (int encoded):
+398796423373804063883227159443027990103303605134631667677344182451027493855372727823833335111438213991778105706315627765023488498063286928585387841383509622533552277480972129057926907353729805900488434890201271419376945084505769370100800806746092214932530280391039812438765506485424944002609932058354900903464310999393445364973711842197957939741395222265000292256765186955215126965001564010622026957987885898172269374825306724629904343157968945882624222149280653805745220617896596637121851563541721557192224029471604659344296111381464411388192305628692750464036090333938132329176062384877019296811540860887621902382055690063419620555929584331434
+- the exchanged key is (completly in hex):
+b"'\xdf\x86\x93\xc4\xd6\xf6\x98\x16\xc5\xdc\x9e\xd2-\xbd\\\xe4c\x88\x0c8\xa2\xd0\x82\xda\x04\xc3\x9d\xe93]\x05\x1d,t\x00\xa0<\x0c\xb6\xcbV\xcc\xd7\xadb\x8f\xf6p\xda=\x0c\xa54\xa5*d4\xbba\xd9\xb9\x89\x94\xe8\rc\xf7qX\xeb\xe4su_\x83\xa7Q\xa4\x9b\xdd\x9d\x17\xcb\xcb\x08B\xf9@\xc1\xa8\xacj\x91+\x86\x9b\x9cq\xa6\x18R\xedYGL@O\xf6\xddy\x7f\xe7^\xdf\x9e\x18\xdb\xd8\x10\xc8\xbe+\x0eq\x02\xbc\xd7Z|8\x81\xdb Z\xdb\xc1\xca\xf4$z`\xcd\x8dy\xfd\xe3M\x87\xd8\xd7\xefg\x90\xa6s\xa5\xcf\xcd\x80\xd6\xc0j\x00\x16\xf7Y0Q\x8a\xcd9f[\xe9=\x1c\x93\xe4\xfaj\x03\xe5\xac\xb5\x06\x8fQy\xeb\xb2\x10m\x97f\xc3\xbf\xc3/\x8b\xed\x89\xc9p\x18\xc8\x96v\n\x87\xee\xfaNCN]2\xf0\xff\xd9\x1c\xde\x15\xebjsG(Y\x0c\x92O\xc8\xed\\S\xed\xc5\x81+\xcfU\xb2\x8b\xe4H[\\\x0eE)\x19\xe3\xd92\x14?\xc3-M\x98y!\xba\x8e.\xea\xaa"
+- the shortened key is:
+b"'\xdf\x86\x93\xc4\xd6\xf6\x98\x16\xc5\xdc\x9e\xd2-\xbd\\\xe4c\x88\x0c8\xa2\xd0\x82\xda\x04\xc3\x9d\xe93]\x05"
+- decrypting the plaintext
+- the plaintext is:
+b'{"netsec-group": 0, "mtype": "auth-response", "challenge_response": {"request": "e634150a24c186b9ea5527824b042cedcf25b4f60d25a11a31d1117c836a509e", "response": "fe9e9db92676cad1c2070459af99859392000a2c33c70a1aad2167356b4773b3"}}'
+
+
+encrypting the decrypted message of founders
+- reading plaintext of the encrypted message sent by alvinne
+- calculating the exchanged key
+- the exchanged key is (ascii encoded):
+0x256a34cb04ca4599779229eeebef9cdda23776040982a8c2852d5ec3f21a527f535f3c1a8d4c0d20723120bd7f73290170d7a72e458035b209201179c21af0527417e5369f195e624437419ac41c2e4e74b7dd615b7e50700c540cead9b6cc707b564fc96fa625afa4269b39aa9bcb913c7bd04eabc5efcd9b5d973c4f085bdc5e2f7c963d0fc10986f92f100000fb7d979d636414dbd0d1e53a6a4e5df05782a487f3e2e6c7cf0bf54f203d92e03e33f22501ff29cc01f63427d44262b2abe67fa6f7614290959024d65c1acddf0db0e8d978d3b4a38fb6c609691ca743401adaba66d957ee6454c5116440507ed9c9926b06f1a8ca5ca1093d0322951910faae079dfc87d7e6db40a4c0dc
+- the exchanged key is (int encoded):
+374209627205557159469425207031868793729495646967732326064757966866196096044039096917957123682388784040775389038430027757072362497563396398742095733154915314790231597139001608376143770589955473463379257783456944750680914828018507205354070568843825723996128086469270681785417363875078078663102463438210552176005493992414125773178991690313980321014072558888426936474771259967980040338537465590074919220349435476081441405524564790302940614202971562923644725002313872118649332196228512268803320965506462563421489685271058436194249510804479285148746793787740059612921240267039367506028294486410825817346802018568365345478244774665729734790516381630684
+- the exchanged key is (completly in hex):
+b'%j4\xcb\x04\xcaE\x99w\x92)\xee\xeb\xef\x9c\xdd\xa27v\x04\t\x82\xa8\xc2\x85-^\xc3\xf2\x1aR\x7fS_<\x1a\x8dL\r r1 \xbd\x7fs)\x01p\xd7\xa7.E\x805\xb2\t \x11y\xc2\x1a\xf0Rt\x17\xe56\x9f\x19^bD7A\x9a\xc4\x1c.Nt\xb7\xdda[~Pp\x0cT\x0c\xea\xd9\xb6\xccp{VO\xc9o\xa6%\xaf\xa4&\x9b9\xaa\x9b\xcb\x91<{\xd0N\xab\xc5\xef\xcd\x9b]\x97<O\x08[\xdc^/|\x96=\x0f\xc1\t\x86\xf9/\x10\x00\x00\xfb}\x97\x9dcd\x14\xdb\xd0\xd1\xe5:jN]\xf0W\x82\xa4\x87\xf3\xe2\xe6\xc7\xcf\x0b\xf5O =\x92\xe0>3\xf2%\x01\xff)\xcc\x01\xf64\'\xd4Bb\xb2\xab\xe6\x7f\xa6\xf7aB\x90\x95\x90$\xd6\\\x1a\xcd\xdf\r\xb0\xe8\xd9x\xd3\xb4\xa3\x8f\xb6\xc6\ti\x1c\xa7C@\x1a\xda\xbaf\xd9W\xeedT\xc5\x11d@P~\xd9\xc9\x92k\x06\xf1\xa8\xca\\\xa1\t=\x03"\x95\x19\x10\xfa\xae\x07\x9d\xfc\x87\xd7\xe6\xdb@\xa4\xc0\xdc'
+- the shortened key is:
+b'%j4\xcb\x04\xcaE\x99w\x92)\xee\xeb\xef\x9c\xdd\xa27v\x04\t\x82\xa8\xc2\x85-^\xc3\xf2\x1aR\x7f'
+- encrypting the plaintext
+- the encrypted plaintext is:
+b'012345670\xae\t\xd9!M*\xe7o\xc9se\x89\xb3\x9bsp\x9b\xbe\xca6=\x94hP)\xb4\xc5\xf2\r\xc6\x826\xd8Q\xd3 \xc4|\x88_`~\x0e\x9e\xca\x19d\xa8\xd2\x99S\xe4\xd9\xc6\x90\xea\xe8\xc6&oMhDe\xe2\x04\x0c!\xa9\xa4m\x00j\x0f\xc5\xb1Q\xbc8\xee\xbf\xfe\x19W\xd7Pu*G\xd3\xef\xf7Q\x96s\x87s\xf9\xe3\xedA\xdc\x08\x87\x1e\xbb.\x8cj\xed\x1d$\x95\x9f\xb0\xc1u\x16"\xae\xc8\x15\x00\xde\x9a\xe5\xe1\xcbW+\xf4\xb5\x13*|\xd3\xed\x9cm\xa0}\x12Z\xff\x08xf\r\xcfV\xd2q\xd1\xcd\xff\xea\xee\xbcp\x86\xa9\xd8Fx\xa7\xdf{\xf3ZF\x8a]\xd3\x89\x83\xd2\xa3\xa88\x03\xc9)\xdf\xc2\x0c[|C^\x1e"{*\x01z\xd8;\x0e\x90U\x90~%\xa7x\xeaY\xa9T\x1e\x1c\'wH\xa4\xcb\xd5\xb5\x10^h\\\xc2Q\x1e|\xd6'
+
+Continuing talk with alvinne
+- receiving message from alvinne
+b'\xb6F\x9a\x89e|)\xd2\xf9X9\x16\x18\x9cA\n\x17e\x82\x1by^qu}[L=\x0e\xb3R\xbb\xe4\xc5\x96\x03\x05Da\xf3\x17K\xa0\xa1\x83\xe0\xdc\xbdrLp\xb4\xca\x12\xab\xe77\xf1\xa5\x98"\x15\x07\xc5\xc9\xf0\x88\xc1\xec6\x13B#q\xfcT\x0f\x97\xeeT\xe3"\x12\x9d{\x13A\xe5\x8cH<\x8ap\xab\x8f\xdb\xa0J\x8eUPq\xe0k"\x1cl\xe1K\x0b\xf3\xe0>Z\xcb\xc6\xf8/\x9au\xa7\x0e_,\xdc\xb9\x8e\xf2\x07\x04\x1d\xc1\x188\x17V\xdco\t\xe7\xdd\\\xe0\xd2\xa0\xd9\xbbM\xb0\x8a\xc5\xfb\xb5]\xea;\xb5f\xa9\xef\x08\xf2k\xca\xb8\xc8N\xb6\xbd\x1b23\x05\r\xb0\xc0\x07\xa2a0[Z\xcf\xeeVQ\x1b\x18\xa7)nF\xcb\xf6\xc7\xd9\xfb\x9b\xab\xbc\xd4\xa4\xe2"\xbf\x9ad?\x10\xca\x10:\xe5\tWt!\xe28\x08\xa9\xf3\\M\x8e\x7fG\xfeq\xd7\xfb\x80>\x14;'
+
+decrypting the encoded message of alvinne
+- reading the encrypted secret out of the file
+- the nonce is:
+b'\xb6F\x9a\x89e|)\xd2'
+- the ciphertext is:
+b'\xf9X9\x16\x18\x9cA\n\x17e\x82\x1by^qu}[L=\x0e\xb3R\xbb\xe4\xc5\x96\x03\x05Da\xf3\x17K\xa0\xa1\x83\xe0\xdc\xbdrLp\xb4\xca\x12\xab\xe77\xf1\xa5\x98"\x15\x07\xc5\xc9\xf0\x88\xc1\xec6\x13B#q\xfcT\x0f\x97\xeeT\xe3"\x12\x9d{\x13A\xe5\x8cH<\x8ap\xab\x8f\xdb\xa0J\x8eUPq\xe0k"\x1cl\xe1K\x0b\xf3\xe0>Z\xcb\xc6\xf8/\x9au\xa7\x0e_,\xdc\xb9\x8e\xf2\x07\x04\x1d\xc1\x188\x17V\xdco\t\xe7\xdd\\\xe0\xd2\xa0\xd9\xbbM\xb0\x8a\xc5\xfb\xb5]\xea;\xb5f\xa9\xef\x08\xf2k\xca\xb8\xc8N\xb6\xbd\x1b23\x05\r\xb0\xc0\x07\xa2a0[Z\xcf\xeeVQ\x1b\x18\xa7)nF\xcb\xf6\xc7\xd9\xfb\x9b\xab\xbc\xd4\xa4\xe2"\xbf\x9ad?\x10\xca\x10:\xe5\tWt!\xe28\x08\xa9\xf3\\M\x8e\x7fG\xfeq\xd7\xfb\x80>\x14;'
+- calculating the exchanged key
+- the exchanged key is (ascii encoded):
+0x256a34cb04ca4599779229eeebef9cdda23776040982a8c2852d5ec3f21a527f535f3c1a8d4c0d20723120bd7f73290170d7a72e458035b209201179c21af0527417e5369f195e624437419ac41c2e4e74b7dd615b7e50700c540cead9b6cc707b564fc96fa625afa4269b39aa9bcb913c7bd04eabc5efcd9b5d973c4f085bdc5e2f7c963d0fc10986f92f100000fb7d979d636414dbd0d1e53a6a4e5df05782a487f3e2e6c7cf0bf54f203d92e03e33f22501ff29cc01f63427d44262b2abe67fa6f7614290959024d65c1acddf0db0e8d978d3b4a38fb6c609691ca743401adaba66d957ee6454c5116440507ed9c9926b06f1a8ca5ca1093d0322951910faae079dfc87d7e6db40a4c0dc
+- the exchanged key is (int encoded):
+374209627205557159469425207031868793729495646967732326064757966866196096044039096917957123682388784040775389038430027757072362497563396398742095733154915314790231597139001608376143770589955473463379257783456944750680914828018507205354070568843825723996128086469270681785417363875078078663102463438210552176005493992414125773178991690313980321014072558888426936474771259967980040338537465590074919220349435476081441405524564790302940614202971562923644725002313872118649332196228512268803320965506462563421489685271058436194249510804479285148746793787740059612921240267039367506028294486410825817346802018568365345478244774665729734790516381630684
+- the exchanged key is (completly in hex):
+b'%j4\xcb\x04\xcaE\x99w\x92)\xee\xeb\xef\x9c\xdd\xa27v\x04\t\x82\xa8\xc2\x85-^\xc3\xf2\x1aR\x7fS_<\x1a\x8dL\r r1 \xbd\x7fs)\x01p\xd7\xa7.E\x805\xb2\t \x11y\xc2\x1a\xf0Rt\x17\xe56\x9f\x19^bD7A\x9a\xc4\x1c.Nt\xb7\xdda[~Pp\x0cT\x0c\xea\xd9\xb6\xccp{VO\xc9o\xa6%\xaf\xa4&\x9b9\xaa\x9b\xcb\x91<{\xd0N\xab\xc5\xef\xcd\x9b]\x97<O\x08[\xdc^/|\x96=\x0f\xc1\t\x86\xf9/\x10\x00\x00\xfb}\x97\x9dcd\x14\xdb\xd0\xd1\xe5:jN]\xf0W\x82\xa4\x87\xf3\xe2\xe6\xc7\xcf\x0b\xf5O =\x92\xe0>3\xf2%\x01\xff)\xcc\x01\xf64\'\xd4Bb\xb2\xab\xe6\x7f\xa6\xf7aB\x90\x95\x90$\xd6\\\x1a\xcd\xdf\r\xb0\xe8\xd9x\xd3\xb4\xa3\x8f\xb6\xc6\ti\x1c\xa7C@\x1a\xda\xbaf\xd9W\xeedT\xc5\x11d@P~\xd9\xc9\x92k\x06\xf1\xa8\xca\\\xa1\t=\x03"\x95\x19\x10\xfa\xae\x07\x9d\xfc\x87\xd7\xe6\xdb@\xa4\xc0\xdc'
+- the shortened key is:
+b'%j4\xcb\x04\xcaE\x99w\x92)\xee\xeb\xef\x9c\xdd\xa27v\x04\t\x82\xa8\xc2\x85-^\xc3\xf2\x1aR\x7f'
+- decrypting the plaintext
+- the plaintext is:
+b'{"netsec-group": 0, "mtype": "flag-request", "challenge_response": {"request": "e634150a24c186b9ea5527824b042cedcf25b4f60d25a11a31d1117c836a509e", "response": "fe9e9db92676cad1c2070459af99859392000a2c33c70a1aad2167356b4773b3"}}'
+
+
+encrypting the decrypted message from alvinne
+- reading plaintext of the encrypted message sent by alvinne
+- calculating the exchanged key
+- the exchanged key is (ascii encoded):
+0x27df8693c4d6f69816c5dc9ed22dbd5ce463880c38a2d082da04c39de9335d051d2c7400a03c0cb6cb56ccd7ad628ff670da3d0ca534a52a6434bb61d9b98994e80d63f77158ebe473755f83a751a49bdd9d17cbcb0842f940c1a8ac6a912b869b9c71a61852ed59474c404ff6dd797fe75edf9e18dbd810c8be2b0e7102bcd75a7c3881db205adbc1caf4247a60cd8d79fde34d87d8d7ef6790a673a5cfcd80d6c06a0016f75930518acd39665be93d1c93e4fa6a03e5acb5068f5179ebb2106d9766c3bfc32f8bed89c97018c896760a87eefa4e434e5d32f0ffd91cde15eb6a734728590c924fc8ed5c53edc5812bcf55b28be4485b5c0e452919e3d932143fc32d4d987921ba8e2eeaaa
+- the exchanged key is (int encoded):
+398796423373804063883227159443027990103303605134631667677344182451027493855372727823833335111438213991778105706315627765023488498063286928585387841383509622533552277480972129057926907353729805900488434890201271419376945084505769370100800806746092214932530280391039812438765506485424944002609932058354900903464310999393445364973711842197957939741395222265000292256765186955215126965001564010622026957987885898172269374825306724629904343157968945882624222149280653805745220617896596637121851563541721557192224029471604659344296111381464411388192305628692750464036090333938132329176062384877019296811540860887621902382055690063419620555929584331434
+- the exchanged key is (completly in hex):
+b"'\xdf\x86\x93\xc4\xd6\xf6\x98\x16\xc5\xdc\x9e\xd2-\xbd\\\xe4c\x88\x0c8\xa2\xd0\x82\xda\x04\xc3\x9d\xe93]\x05\x1d,t\x00\xa0<\x0c\xb6\xcbV\xcc\xd7\xadb\x8f\xf6p\xda=\x0c\xa54\xa5*d4\xbba\xd9\xb9\x89\x94\xe8\rc\xf7qX\xeb\xe4su_\x83\xa7Q\xa4\x9b\xdd\x9d\x17\xcb\xcb\x08B\xf9@\xc1\xa8\xacj\x91+\x86\x9b\x9cq\xa6\x18R\xedYGL@O\xf6\xddy\x7f\xe7^\xdf\x9e\x18\xdb\xd8\x10\xc8\xbe+\x0eq\x02\xbc\xd7Z|8\x81\xdb Z\xdb\xc1\xca\xf4$z`\xcd\x8dy\xfd\xe3M\x87\xd8\xd7\xefg\x90\xa6s\xa5\xcf\xcd\x80\xd6\xc0j\x00\x16\xf7Y0Q\x8a\xcd9f[\xe9=\x1c\x93\xe4\xfaj\x03\xe5\xac\xb5\x06\x8fQy\xeb\xb2\x10m\x97f\xc3\xbf\xc3/\x8b\xed\x89\xc9p\x18\xc8\x96v\n\x87\xee\xfaNCN]2\xf0\xff\xd9\x1c\xde\x15\xebjsG(Y\x0c\x92O\xc8\xed\\S\xed\xc5\x81+\xcfU\xb2\x8b\xe4H[\\\x0eE)\x19\xe3\xd92\x14?\xc3-M\x98y!\xba\x8e.\xea\xaa"
+- the shortened key is:
+b"'\xdf\x86\x93\xc4\xd6\xf6\x98\x16\xc5\xdc\x9e\xd2-\xbd\\\xe4c\x88\x0c8\xa2\xd0\x82\xda\x04\xc3\x9d\xe93]\x05"
+- encrypting the plaintext
+- the encrypted plaintext is:
+b'01234567\x9e\x87\x1d TH\n{\xea-\xf1\xa9q0\xa3V\xc4\xff\x12\xe0F\xf9\xff\n\xe4z\x14\xa0MZw\x06\xf5\x13\x07E\x88\xb2y\xc3,\x03\x01\x99\xec\xed\\\x14\x9b\xa8o\xe7WKW\xbc}\xad\xbc\x89\x86\x94\xb8KP/\x1bs\xaf\x8a\xf1p\r\xc0\x00c#2\xc8i\xf7\x1a\xffV\xd1\xf2\x03\xddD\x94\x84\xfb\xd8\x13\xa0\xd3d~\x00T\xdd\x00\xd0N\xba\xf1\xdc\x1e\x06\x96sB5&\x9c4M\x8a\x17\x95\x9c\xa0\x96|\xbf\xb8\xef\x1e\xaem\x9c\x07\xcf\xbaO\xce\xef3;$\x8c\x1c\x92\xf4\xd6V\xe5\x99c;l\xe1#\xe7$oBb\xf1\x12;\xcb\xa7h\x1a4\x8f\x8a\x11\xd4\\\x04\xfaN\xb4\x05(\x16J\x16\x8d\x08\xfc\xc3\xa5%D\x13G\x9f\xad\xec\xe0\xc8\x80\xfd\xa6\xdbn\xa83\xcdL\te\xba\xab\xa4\x12\t%\xf1\x1f\x88\xc4 \xb2M\xed\x9b\x85\xd1\xca\x98\xcc\xee\xec'
+
+Continuing to talk with founders
+- receiving message from founders
+b's\x18~5H\xb48\xe8\x10H\x1f"\xcbO@\x02PNKeN\xcc\xe3\xe28E\xfd\x02\xb5\x1d\xdeQ~i\xca\xc1\xb4\x0c\x93\xc8\xb4\x8b%\xee\x05\x1a\xb3n,\x86\xc5\xad\x8f\x98.\xc9AF1\x82\xb8\x07\xb1eN2\xff\xf3\'\xb78Q,7\x10\xab\x94\xa3\xe3\xfc|/\xc1\xad\x8c\xfc\xe9\xbe\xc1\x9a\x1e N\xbaf\xb6U\xe8\x81B\xa1\x96\x86\x97\xdax\xd0f\x1c\x18+\x99\xeb\x14\xfc\x97\xa2\xa5\xacO\xd01xy\xed\xb8\x93\x7fC.\x04\x17\n(\xb2I\xa3\xd7\xd0X\xee8-\xa2y\x14\x01R\xd2\xaa\xbe\xca\xd6\xc5\xb6q\xb2\x7f\x10\xbe\xd6\x8a\xf6|_)\xfb\xee1\x9a\xab\xd9\xfa\x15\xd0\x05\xfcb$\x9b\x95\xb6\x811#\x15\x95A\xdc=\x92\x8f\xde\xfb1\xd4\xe4\xe0<1\xa2_\x97\x89\x97:)\'\xa0G>\xe4q\xc4}\xfb\xe4\xc8\x00\xdd\x80n\x9cY\xf4p\x1f\x89\xd1(\xea\x0f\x93\xe9\xab\xc8\xbd\xb1jW+\xd67\xdf\x8f\xc0\xfb\xc1\x8f\x9a\xa3\xd4\r\xbe\xbf\xea\xe5\x88\xa4\x98\xbc\xc2V\xeb\xd4\x86\xa8\xfa\x06\xf8\xa67b'
+
+decrypting the encoded message of founders
+- reading the encrypted secret out of the file
+- the nonce is:
+b's\x18~5H\xb48\xe8'
+- the ciphertext is:
+b'\x10H\x1f"\xcbO@\x02PNKeN\xcc\xe3\xe28E\xfd\x02\xb5\x1d\xdeQ~i\xca\xc1\xb4\x0c\x93\xc8\xb4\x8b%\xee\x05\x1a\xb3n,\x86\xc5\xad\x8f\x98.\xc9AF1\x82\xb8\x07\xb1eN2\xff\xf3\'\xb78Q,7\x10\xab\x94\xa3\xe3\xfc|/\xc1\xad\x8c\xfc\xe9\xbe\xc1\x9a\x1e N\xbaf\xb6U\xe8\x81B\xa1\x96\x86\x97\xdax\xd0f\x1c\x18+\x99\xeb\x14\xfc\x97\xa2\xa5\xacO\xd01xy\xed\xb8\x93\x7fC.\x04\x17\n(\xb2I\xa3\xd7\xd0X\xee8-\xa2y\x14\x01R\xd2\xaa\xbe\xca\xd6\xc5\xb6q\xb2\x7f\x10\xbe\xd6\x8a\xf6|_)\xfb\xee1\x9a\xab\xd9\xfa\x15\xd0\x05\xfcb$\x9b\x95\xb6\x811#\x15\x95A\xdc=\x92\x8f\xde\xfb1\xd4\xe4\xe0<1\xa2_\x97\x89\x97:)\'\xa0G>\xe4q\xc4}\xfb\xe4\xc8\x00\xdd\x80n\x9cY\xf4p\x1f\x89\xd1(\xea\x0f\x93\xe9\xab\xc8\xbd\xb1jW+\xd67\xdf\x8f\xc0\xfb\xc1\x8f\x9a\xa3\xd4\r\xbe\xbf\xea\xe5\x88\xa4\x98\xbc\xc2V\xeb\xd4\x86\xa8\xfa\x06\xf8\xa67b'
+- calculating the exchanged key
+- the exchanged key is (ascii encoded):
+0x27df8693c4d6f69816c5dc9ed22dbd5ce463880c38a2d082da04c39de9335d051d2c7400a03c0cb6cb56ccd7ad628ff670da3d0ca534a52a6434bb61d9b98994e80d63f77158ebe473755f83a751a49bdd9d17cbcb0842f940c1a8ac6a912b869b9c71a61852ed59474c404ff6dd797fe75edf9e18dbd810c8be2b0e7102bcd75a7c3881db205adbc1caf4247a60cd8d79fde34d87d8d7ef6790a673a5cfcd80d6c06a0016f75930518acd39665be93d1c93e4fa6a03e5acb5068f5179ebb2106d9766c3bfc32f8bed89c97018c896760a87eefa4e434e5d32f0ffd91cde15eb6a734728590c924fc8ed5c53edc5812bcf55b28be4485b5c0e452919e3d932143fc32d4d987921ba8e2eeaaa
+- the exchanged key is (int encoded):
+398796423373804063883227159443027990103303605134631667677344182451027493855372727823833335111438213991778105706315627765023488498063286928585387841383509622533552277480972129057926907353729805900488434890201271419376945084505769370100800806746092214932530280391039812438765506485424944002609932058354900903464310999393445364973711842197957939741395222265000292256765186955215126965001564010622026957987885898172269374825306724629904343157968945882624222149280653805745220617896596637121851563541721557192224029471604659344296111381464411388192305628692750464036090333938132329176062384877019296811540860887621902382055690063419620555929584331434
+- the exchanged key is (completly in hex):
+b"'\xdf\x86\x93\xc4\xd6\xf6\x98\x16\xc5\xdc\x9e\xd2-\xbd\\\xe4c\x88\x0c8\xa2\xd0\x82\xda\x04\xc3\x9d\xe93]\x05\x1d,t\x00\xa0<\x0c\xb6\xcbV\xcc\xd7\xadb\x8f\xf6p\xda=\x0c\xa54\xa5*d4\xbba\xd9\xb9\x89\x94\xe8\rc\xf7qX\xeb\xe4su_\x83\xa7Q\xa4\x9b\xdd\x9d\x17\xcb\xcb\x08B\xf9@\xc1\xa8\xacj\x91+\x86\x9b\x9cq\xa6\x18R\xedYGL@O\xf6\xddy\x7f\xe7^\xdf\x9e\x18\xdb\xd8\x10\xc8\xbe+\x0eq\x02\xbc\xd7Z|8\x81\xdb Z\xdb\xc1\xca\xf4$z`\xcd\x8dy\xfd\xe3M\x87\xd8\xd7\xefg\x90\xa6s\xa5\xcf\xcd\x80\xd6\xc0j\x00\x16\xf7Y0Q\x8a\xcd9f[\xe9=\x1c\x93\xe4\xfaj\x03\xe5\xac\xb5\x06\x8fQy\xeb\xb2\x10m\x97f\xc3\xbf\xc3/\x8b\xed\x89\xc9p\x18\xc8\x96v\n\x87\xee\xfaNCN]2\xf0\xff\xd9\x1c\xde\x15\xebjsG(Y\x0c\x92O\xc8\xed\\S\xed\xc5\x81+\xcfU\xb2\x8b\xe4H[\\\x0eE)\x19\xe3\xd92\x14?\xc3-M\x98y!\xba\x8e.\xea\xaa"
+- the shortened key is:
+b"'\xdf\x86\x93\xc4\xd6\xf6\x98\x16\xc5\xdc\x9e\xd2-\xbd\\\xe4c\x88\x0c8\xa2\xd0\x82\xda\x04\xc3\x9d\xe93]\x05"
+- decrypting the plaintext
+- the plaintext is:
+b'{"netsec-group": 0, "mtype": "flag-request", "challenge_response": {"request": "e634150a24c186b9ea5527824b042cedcf25b4f60d25a11a31d1117c836a509e", "response": "fe9e9db92676cad1c2070459af99859392000a2c33c70a1aad2167356b4773b3"}, "flag": "netsec{DONT_USE_THIS_FLAG}"}'
+
+
+encrypting the decrypted message of founders
+- reading plaintext of the encrypted message sent by alvinne
+- calculating the exchanged key
+- the exchanged key is (ascii encoded):
+0x256a34cb04ca4599779229eeebef9cdda23776040982a8c2852d5ec3f21a527f535f3c1a8d4c0d20723120bd7f73290170d7a72e458035b209201179c21af0527417e5369f195e624437419ac41c2e4e74b7dd615b7e50700c540cead9b6cc707b564fc96fa625afa4269b39aa9bcb913c7bd04eabc5efcd9b5d973c4f085bdc5e2f7c963d0fc10986f92f100000fb7d979d636414dbd0d1e53a6a4e5df05782a487f3e2e6c7cf0bf54f203d92e03e33f22501ff29cc01f63427d44262b2abe67fa6f7614290959024d65c1acddf0db0e8d978d3b4a38fb6c609691ca743401adaba66d957ee6454c5116440507ed9c9926b06f1a8ca5ca1093d0322951910faae079dfc87d7e6db40a4c0dc
+- the exchanged key is (int encoded):
+374209627205557159469425207031868793729495646967732326064757966866196096044039096917957123682388784040775389038430027757072362497563396398742095733154915314790231597139001608376143770589955473463379257783456944750680914828018507205354070568843825723996128086469270681785417363875078078663102463438210552176005493992414125773178991690313980321014072558888426936474771259967980040338537465590074919220349435476081441405524564790302940614202971562923644725002313872118649332196228512268803320965506462563421489685271058436194249510804479285148746793787740059612921240267039367506028294486410825817346802018568365345478244774665729734790516381630684
+- the exchanged key is (completly in hex):
+b'%j4\xcb\x04\xcaE\x99w\x92)\xee\xeb\xef\x9c\xdd\xa27v\x04\t\x82\xa8\xc2\x85-^\xc3\xf2\x1aR\x7fS_<\x1a\x8dL\r r1 \xbd\x7fs)\x01p\xd7\xa7.E\x805\xb2\t \x11y\xc2\x1a\xf0Rt\x17\xe56\x9f\x19^bD7A\x9a\xc4\x1c.Nt\xb7\xdda[~Pp\x0cT\x0c\xea\xd9\xb6\xccp{VO\xc9o\xa6%\xaf\xa4&\x9b9\xaa\x9b\xcb\x91<{\xd0N\xab\xc5\xef\xcd\x9b]\x97<O\x08[\xdc^/|\x96=\x0f\xc1\t\x86\xf9/\x10\x00\x00\xfb}\x97\x9dcd\x14\xdb\xd0\xd1\xe5:jN]\xf0W\x82\xa4\x87\xf3\xe2\xe6\xc7\xcf\x0b\xf5O =\x92\xe0>3\xf2%\x01\xff)\xcc\x01\xf64\'\xd4Bb\xb2\xab\xe6\x7f\xa6\xf7aB\x90\x95\x90$\xd6\\\x1a\xcd\xdf\r\xb0\xe8\xd9x\xd3\xb4\xa3\x8f\xb6\xc6\ti\x1c\xa7C@\x1a\xda\xbaf\xd9W\xeedT\xc5\x11d@P~\xd9\xc9\x92k\x06\xf1\xa8\xca\\\xa1\t=\x03"\x95\x19\x10\xfa\xae\x07\x9d\xfc\x87\xd7\xe6\xdb@\xa4\xc0\xdc'
+- the shortened key is:
+b'%j4\xcb\x04\xcaE\x99w\x92)\xee\xeb\xef\x9c\xdd\xa27v\x04\t\x82\xa8\xc2\x85-^\xc3\xf2\x1aR\x7f'
+- encrypting the plaintext
+- the encrypted plaintext is:
+b'012345670\xae\t\xd9!M*\xe7o\xc9se\x89\xb3\x9bsp\x9b\xbe\xca6=\x94hP)\xb4\xc5\xf2\r\xc1\x9b#\xd7Q\xd3 \xc6y\x82Bg9\x00\x92\xc8Xo\xa1\xdf\x99Z\xef\xd0\xc4\xaa\xc7\xff\xd0%pLuR"\xfa\x1eWx\xf9\xb3y\x04z\x19\xc2\xe7I\xa6:\xa9\xec\xfb\x1eR\xd3U$yA\x84\xbd\xfe_\xc2(\xdbw\xad\xe3\xeaD\xd3\x02\x81H\xe9*\x8a;\xeb\x1c#\x90\xcb\xb7\x96#Dr\xa8\x9cC\x07\x8a\xca\xe5\xb1\x99U~\xa1\xb5\x13,(\x88\xe6\x99:\xf4x\x1b\x06\xb8\x06td]\xd8@\xd1n\xd0\xd0\xe9\xad\xf6\xa6r\xc2\xaa\x84\x1a$\xfa\xd9 \xf8^G\x8b\x08\xd1\x8c\xd6\x80\xf2\xaa?\x04\xcd(\xd3\x9a\x0b\x04|BS\x12(q!\x03z\xd8j]\xc1\x05\x90.q\xa0)\xba\t\xa9QH\x1f vL\xa2\xc8\x81\xe3\x13^l\r\x93@A-\x8bu[v#\xd0\xa8\xfb\xedm\x1f;\xf6>\xb9\x1d\x9e>&\xd9\xe4`\xda="p\xe5k@QL\xb5%\xb1q\xa0\xa43'
+
+Continuing talk with alvinne
+- receiving message from alvinne
+b''
+
+decrypting the encoded message of alvinne
+- reading the encrypted secret out of the file
+- the nonce is:
+b''
+- the ciphertext is:
+b''
+- calculating the exchanged key
+- the exchanged key is (ascii encoded):
+0x256a34cb04ca4599779229eeebef9cdda23776040982a8c2852d5ec3f21a527f535f3c1a8d4c0d20723120bd7f73290170d7a72e458035b209201179c21af0527417e5369f195e624437419ac41c2e4e74b7dd615b7e50700c540cead9b6cc707b564fc96fa625afa4269b39aa9bcb913c7bd04eabc5efcd9b5d973c4f085bdc5e2f7c963d0fc10986f92f100000fb7d979d636414dbd0d1e53a6a4e5df05782a487f3e2e6c7cf0bf54f203d92e03e33f22501ff29cc01f63427d44262b2abe67fa6f7614290959024d65c1acddf0db0e8d978d3b4a38fb6c609691ca743401adaba66d957ee6454c5116440507ed9c9926b06f1a8ca5ca1093d0322951910faae079dfc87d7e6db40a4c0dc
+- the exchanged key is (int encoded):
+374209627205557159469425207031868793729495646967732326064757966866196096044039096917957123682388784040775389038430027757072362497563396398742095733154915314790231597139001608376143770589955473463379257783456944750680914828018507205354070568843825723996128086469270681785417363875078078663102463438210552176005493992414125773178991690313980321014072558888426936474771259967980040338537465590074919220349435476081441405524564790302940614202971562923644725002313872118649332196228512268803320965506462563421489685271058436194249510804479285148746793787740059612921240267039367506028294486410825817346802018568365345478244774665729734790516381630684
+- the exchanged key is (completly in hex):
+b'%j4\xcb\x04\xcaE\x99w\x92)\xee\xeb\xef\x9c\xdd\xa27v\x04\t\x82\xa8\xc2\x85-^\xc3\xf2\x1aR\x7fS_<\x1a\x8dL\r r1 \xbd\x7fs)\x01p\xd7\xa7.E\x805\xb2\t \x11y\xc2\x1a\xf0Rt\x17\xe56\x9f\x19^bD7A\x9a\xc4\x1c.Nt\xb7\xdda[~Pp\x0cT\x0c\xea\xd9\xb6\xccp{VO\xc9o\xa6%\xaf\xa4&\x9b9\xaa\x9b\xcb\x91<{\xd0N\xab\xc5\xef\xcd\x9b]\x97<O\x08[\xdc^/|\x96=\x0f\xc1\t\x86\xf9/\x10\x00\x00\xfb}\x97\x9dcd\x14\xdb\xd0\xd1\xe5:jN]\xf0W\x82\xa4\x87\xf3\xe2\xe6\xc7\xcf\x0b\xf5O =\x92\xe0>3\xf2%\x01\xff)\xcc\x01\xf64\'\xd4Bb\xb2\xab\xe6\x7f\xa6\xf7aB\x90\x95\x90$\xd6\\\x1a\xcd\xdf\r\xb0\xe8\xd9x\xd3\xb4\xa3\x8f\xb6\xc6\ti\x1c\xa7C@\x1a\xda\xbaf\xd9W\xeedT\xc5\x11d@P~\xd9\xc9\x92k\x06\xf1\xa8\xca\\\xa1\t=\x03"\x95\x19\x10\xfa\xae\x07\x9d\xfc\x87\xd7\xe6\xdb@\xa4\xc0\xdc'
+- the shortened key is:
+b'%j4\xcb\x04\xcaE\x99w\x92)\xee\xeb\xef\x9c\xdd\xa27v\x04\t\x82\xa8\xc2\x85-^\xc3\xf2\x1aR\x7f'
+Traceback (most recent call last):
+  File "moderator.py", line 237, in <module>
+    main()
+  File "moderator.py", line 235, in main
+    moderator()
+  File "moderator.py", line 123, in moderator
+    decrypt(encralv2, dhalv, plainalv2, compstralv)
+  File "moderator.py", line 204, in decrypt
+    cipher = Salsa20.new(key, nonce)
+  File "/usr/local/lib/python3.7/dist-packages/Crypto/Cipher/Salsa20.py", line 160, in new
+    return Salsa20Cipher(key, nonce)
+  File "/usr/local/lib/python3.7/dist-packages/Crypto/Cipher/Salsa20.py", line 64, in __init__
+    len(nonce))
+ValueError: Incorrect nonce length for Salsa20 (0 bytes)
+

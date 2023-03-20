@@ -1,0 +1,46 @@
+﻿
+2)
+
+a) What did you observe in the network capture?
+
+The user goes on alpinelinux.org with DNS query. There are many TCP, HTTP request and reveivings, files were transfered (like upload) by FTP and SSHv2. Some packages were encrypted by SSHv2 but username and password were carried with FTP (red lines) which is bad. There is (DNS, TCP, HTTP, FTP, SSHv2)
+
+Also it looks like there is a username/password combination where the username is pooradmin and password is encrypted.
+//frame contains pooradmin
+----
+# Packet 3 from C:\Users\Asus\Desktop\Yeni klasör\sheet-1-solution\02-pcap-analysis-ftp\pooradmin.pcap
+- 937
+- 42.401052
+- 172.17.0.3
+- 172.17.0.2
+- TCP
+- 634
+- 57213 → 30006 [PSH, ACK] Seq=1 Ack=1 Win=29312 Len=568 TSval=1204081587 TSecr=3955339648
+
+pooradmin:$6$q3SFP7Jm$eOTKWYVQ.rv47ljK.t9MTH0U1VLqlTNgEb.RPBLfsLFA1E/Mta00x/uJ9DHj2pBaHb/9z/tOkBPiFPQIZfi/S/:17665:0:99999:7:::
+
+b) What is the password of the user pooradmin?
+
+----
+# Packet 16 from C:\Users\Asus\Desktop\Yeni klasör\sheet-1-solution\02-pcap-analysis-ftp\pooradmin.pcap
+- 904
+- 12.039692
+- 172.17.0.3
+- 172.17.0.2
+- FTP
+- 85
+- Request: PASS hackH4ckhacK
+
+USER hackerman
+PASS hackH4ckhacK
+
+c) In your opinion, is the attacker a very skilled one? Why or why not?
+
+The attacker is not very skilled one because he only uses easy username and password for the account. Especially password is very easy by brute force tryings. 
+
+d) What would you recommend to the pooradmin user?
+
+FTP is unsecure protocol because it is based on clear text and does not have encryption while data is sending. 
+Secure Socket Layer, Transport Layer Security, SSH File Transfer Protocols can be used for username and password as secure options. Especially, SSHv2 shoul have been used to carry username and password. 
+
+

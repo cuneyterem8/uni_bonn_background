@@ -1,0 +1,18 @@
+Before answering the questions regarding this exercise, I want to mention that, sadly, the synflooder did not work. All that was received by capturing packets were packets with flags "RA", not "SA", so no synflooding attack was possible. Furthermore only every second packet is answered by the server, which is again strange.
+Now to the questions:
+
+As the server does not really crash we do not have a pcap file to upload. As putting in packets in existing pcaps is difficult and so, we made a list of packets in our sniffer to be put into a pcap file in the end, but as the server will not crash, there is no end and therefore no pcap file.
+
+The interesting point about only every second packet being answered by the server, for orval and chimay, was mentioned before, same holds for the "RA"-flag thing.
+
+Countermeasures against synflooding attacks are setting down the time to wait for an answer on the one hand statically and the other hand one can do this dynamically based on the number of requests at a certain time.
+Other countermeasures are only answering a specific amount of requests from the same Ip/Port.
+
+For the second part, as to be seen in the source code this has been done inside the old code.
+We detect a successful attack by sniffing the traffic. If we get the server to crash, then there is no traffic anymore with the server as source and our sniffer terminates after 10 seconds. This is the sign that we can stop our synflooder as the attak was successful.
+
+Synflooding attacks can be detected by looking if the attacker was dumb enough to use the same Ip/Port all the time, or exactly the same other non-default parameters (seq, window with unusual values).
+For a more intelligent attacker go down a layer and compare Mac adresses.
+Another possibility is to check the overall requests of the server. If we have much more requests as usual, this might be an attack.
+
+

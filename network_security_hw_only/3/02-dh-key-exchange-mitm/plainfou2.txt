@@ -1,0 +1,1 @@
+{"netsec-group": 0, "mtype": "flag-request", "challenge_response": {"request": "82d41a7bce1cb2ae98be5f1ed2f2aa636d5a7e33da59dad769021d118c094156", "response": "11e49fd963e49cdf837feda8c6d0d5b503ac5fc5b961f3651e9ec843d53025a1"}, "flag": "netsec{DONT_USE_THIS_FLAG}"}

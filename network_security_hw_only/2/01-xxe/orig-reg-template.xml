@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<registration>
+  <student>
+    <name>
+      <first>ENTER_FIRST_NAME_OF_STUDENT_1</first>
+      <last>ENTER_FIRST_NAME_OF_STUDENT_1</last>
+    </name>
+    <email>ENTER_EMAIL_OF_STUDENT_1</email>
+  </student>
+  <student>
+    <name>
+      <first>ENTER_FIRST_NAME_OF_STUDENT_2</first>
+      <last>ENTER_LAST_NAME_OF_STUDENT_2</last>
+    </name>
+    <email>ENTER_EMAIL_OF_STUDENT_2</email>
+  </student>
+  <student>
+    <name>
+      <first>ENTER_FIRST_NAME_OF_STUDENT_3</first>
+      <last>ENTER_LAST_NAME_OF_STUDENT_3</last>
+    </name>
+    <email>ENTER_EMAIL_OF_STUDENT_3</email>
+  </student>
+</registration>
+

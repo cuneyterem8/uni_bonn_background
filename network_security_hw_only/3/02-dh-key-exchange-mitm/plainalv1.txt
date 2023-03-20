@@ -1,0 +1,1 @@
+{"netsec-group": 0, "mtype": "auth-request", "challenge_response": {"request": "82d41a7bce1cb2ae98be5f1ed2f2aa636d5a7e33da59dad769021d118c094156"}}

@@ -1,0 +1,41 @@
+# Nmap 7.70 scan initiated Wed May 15 13:08:01 2019 as: nmap -oN nmap.txt 10.3.3.60-80
+Nmap scan report for 10.3.3.61
+Host is up (0.00030s latency).
+Not shown: 999 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+
+Nmap scan report for 10.3.3.62
+Host is up (0.00038s latency).
+Not shown: 998 closed ports
+PORT    STATE SERVICE
+22/tcp  open  ssh
+443/tcp open  https
+
+Nmap scan report for 10.3.3.64
+Host is up (0.00036s latency).
+Not shown: 999 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+
+Nmap scan report for 10.3.3.65
+Host is up (0.00039s latency).
+Not shown: 999 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+
+Nmap scan report for schlenkerla.xxe.netsec.seclab-bonn.de (10.3.3.70)
+Host is up (0.00034s latency).
+Not shown: 998 closed ports
+PORT    STATE SERVICE
+22/tcp  open  ssh
+443/tcp open  https
+
+Nmap scan report for cadolzburger.xxe.netsec.seclab-bonn.de (10.3.3.71)
+Host is up (0.00031s latency).
+Not shown: 998 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+
+# Nmap done at Wed May 15 13:08:02 2019 -- 21 IP addresses (6 hosts up) scanned in 1.56 seconds
