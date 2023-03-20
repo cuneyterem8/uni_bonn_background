@@ -48,8 +48,7 @@ plt.axvline(x=np.where(cum_sum>=0.95)[0][0])
 plt.xlabel('num of components')
 plt.ylabel('cumulative variance ratio');
 ```
-![alt text](https://github.com/cuneyterem8/uni_bonn_background/blob/main/biomedical_data_science_hw_only/output1.png?raw=true)
-
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/biomedical_data_science_hw_only/output1.png?raw=true" width="60%" height="60%">
 > output 1
 
 ```python
@@ -64,8 +63,7 @@ plt.xlabel('PC1')
 plt.ylabel('PC2')
 plt.show()
 ```
-![alt text](https://github.com/cuneyterem8/uni_bonn_background/blob/main/biomedical_data_science_hw_only/output2.png?raw=true)
-
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/biomedical_data_science_hw_only/output2.png?raw=true" width="60%" height="60%">
 > output 2
 
 ```python
