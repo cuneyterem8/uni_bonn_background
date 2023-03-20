@@ -15,32 +15,13 @@ I took a total of 120 credits with a total of 14 courses and thesis+seminar from
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/diplomas/bonn_diploma.JPEG?raw=true" width="60%" height="60%">
 > Diploma
 
-intelligence systems;
--artificial life
--machine learning
--neural networks
--robot learning
--cognitive robotics
--cognitive robotics lab
--humanoid robots lab
--humanoid robots seminar
+intelligence systems: artificial life, machine learning, neural networks, robot learning, cognitive robotics, cognitive robotics lab, humanoid robots lab, humanoid robots seminar
 
-computer-vision-audio
--deep_learning_for_visual_recognition
--audio_signal_processing
+computer-vision-audio: deep_learning_for_visual_recognition, audio_signal_processing
 
-information systems
--thesis: usable security and privacy
--usable security and privacy
--it security
--sensor data fusion
--mobile communication
+information systems: thesis in usable security and privacy, usable security and privacy, it security, sensor data fusion, mobile communication
 
-only exercises (not exams due to lack of preparation)
--biomedical data science
--humanoid robots
--foundation of graphics
--network security
+only exercises (not exams due to lack of preparation): biomedical data science, humanoid robots, foundation of graphics, network security
 
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/diplomas/bonn_transcript_1.JPEG?raw=true" width="60%" height="60%">
@@ -48,7 +29,8 @@ only exercises (not exams due to lack of preparation)
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/diplomas/bonn_transcript_2.JPEG?raw=true" width="60%" height="60%">
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/diplomas/bonn_transcript_3.JPEG?raw=true" width="60%" height="60%">
-> Transcript
+
+> Transcript lectures
 
 
 
