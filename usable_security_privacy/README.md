@@ -15,7 +15,7 @@ Most of the exercises include heavily practical coding and some theoretical math
 - Ethical, psychological, sociological and economic aspects of security & privacy technologies
 
 
-### R-studio
+### R-studio example from task
 
 ```r
 library(stats)
