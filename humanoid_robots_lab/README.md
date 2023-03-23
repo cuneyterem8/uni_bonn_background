@@ -18,7 +18,7 @@ Relevant implementations are partial due to avoid non-allowed code content, the 
 After reaching the target, the robot is reset to its starting position and calculates the optimal path to the target with the A* algorithm. It executes this path until it reaches the target the second time
 
 
-### C++
+### C++ example from task
 
 ```cpp
 #include <iostream>
