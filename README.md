@@ -14,7 +14,6 @@ Being the best university in Germany in the field of mathematics, Uni of Bonn ha
 
 I took a total of 120 credits with a total of 14 courses and thesis+seminar from three different fields. All lecture details can be seen in files here with a summary of the content of each one of them. The transcript and diploma supplement can be seen [here](https://github.com/cuneyterem8/uni_bonn_background/tree/main/diplomas)
 
-<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/diplomas/bonn_transcript_1.JPEG?raw=true" width="80%" height="70%">
 
 intelligence systems: [artificial life](https://github.com/cuneyterem8/uni_bonn_background/tree/main/artificial_life), [machine learning](https://github.com/cuneyterem8/uni_bonn_background/tree/main/machine_learning), [neural networks](https://github.com/cuneyterem8/uni_bonn_background/tree/main/neural_networks), [robot learning](https://github.com/cuneyterem8/uni_bonn_background/tree/main/robot_learning), [cognitive robotics](https://github.com/cuneyterem8/uni_bonn_background/tree/main/cognitive_robotics), [cognitive robotics lab](https://github.com/cuneyterem8/uni_bonn_background/tree/main/cognitive_robotics_lab), [humanoid robots lab](https://github.com/cuneyterem8/uni_bonn_background/tree/main/humanoid_robots_lab), [humanoid robots seminar](https://github.com/cuneyterem8/uni_bonn_background/tree/main/humanoid_robots_seminar)
 
