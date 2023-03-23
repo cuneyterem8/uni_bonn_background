@@ -15,7 +15,7 @@ Most of the exercises include heavily practical coding and some theoretical math
 - Basics of deep learning
 
 
-### Python
+### Python example from task
 
 ```python
 import numpy as np
