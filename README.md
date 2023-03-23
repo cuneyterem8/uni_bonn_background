@@ -23,7 +23,9 @@ information systems: [thesis in usable security and privacy](https://github.com/
 
 only exercises (not exams due to lack of preparation): [biomedical data science](https://github.com/cuneyterem8/uni_bonn_background/tree/main/biomedical_data_science_hw_only), [humanoid robots](https://github.com/cuneyterem8/uni_bonn_background/tree/main/humanoid_robots_hw_only), [foundation of graphics](https://github.com/cuneyterem8/uni_bonn_background/tree/main/foundation_of_graphics_hw_only), [network security](https://github.com/cuneyterem8/uni_bonn_background/tree/main/network_security_hw_only)
 
-<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/humanoid_robots_lab/turtlebot2_map.gif?raw=true" width="60%" height="60%">
+### Example images from labs and thesis 
+
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/humanoid_robots_lab/turtlebot2_map.gif?raw=true" width="60%" height="50%">
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/thesis_usable_security_privacy/thesis_website.gif?raw=true" width="60%" height="60%">
 
