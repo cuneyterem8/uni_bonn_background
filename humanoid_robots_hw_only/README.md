@@ -9,7 +9,7 @@ Most of the exercises include heavily practical coding and some theoretical math
 Linear algebra and the Eigen library, Odometry calibration with least squares, Projective geometry and camera parameters, Forward kinematics, kd-trees, Octree representation, Signed distance function, ICP, Particle filter, Path planning, Footstep planning, Anytime Repairing A* (ARA*), Zero Moment Point (ZMP), Inverse kinematics, Rapidly exploring Random Trees (RRT), Inverse reachability maps (IRM)
 
 
-### C++
+### C++ example from task
 
 ```cpp
 #include <deneme1/deneme1.h>
