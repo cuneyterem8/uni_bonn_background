@@ -15,7 +15,7 @@ For many recent years, computer vision by applying deep neural networks has been
 Our work is to examine whether it is efficient on the standard GPU RTX 2080 and also for the Google Coral edgeTPU devices.
 
 
-### Python
+### Python example from task
 
 ```python
 #!/usr/bin/env python3
