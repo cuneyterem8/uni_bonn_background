@@ -8,7 +8,7 @@ This Lab lecture consists of improving existing tutrlebot2 project using qtCreat
 Relevant implementations are partial due to avoid non-allowed code content, the documents can be found in reports and presentations in detail, full video of robot action can be seen in video file.
 
 
-![alt text](https://github.com/cuneyterem8/uni_bonn_background/blob/main/humanoid_robots_lab/turtlebot2_map.gif?raw=true)
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/humanoid_robots_lab/turtlebot2_map.gif?raw=true" width="60%" height="50%">
 
 
 ### Motivation
