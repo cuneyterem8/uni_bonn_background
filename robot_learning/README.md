@@ -9,7 +9,7 @@ Most of the exercises include heavily practical coding and some theoretical math
 Reinforcement learning, Markov decision processes, dynamic programming, Monte Carlo methods, temporal-difference methods, function approximation, liear quadratic regulation, differential dynamic programming, partially observable MDPs, policy gradient methods, inverse reinforcement learning, imitation learning, learning kinematic models, perceiving and handling of objects
 
 
-### Python
+### Python example from task
 
 ```python
 # Calculating expectation , assuming that he can attempt tasks in any order and m
