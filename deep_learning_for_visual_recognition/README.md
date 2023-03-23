@@ -9,7 +9,7 @@ Most of the exercises include heavily practical coding and some theoretical math
 This course will introduce the fundamentals of neural networks and then progress to state-of-the-art convolutional and recurrent neural networks as well as their use in applications for visual recognition. Students will get a chance to learn how to implement and train their own network for visual recognition tasks such as object recognition, image segmentation and caption generation
 
 
-### Python
+### Python example from task
 
 ```python
 import torch
