@@ -27,7 +27,7 @@ only exercises (not exams due to lack of preparation): [biomedical data science]
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/humanoid_robots_lab/turtlebot2_map.gif?raw=true" width="60%" height="50%">
 
-<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/thesis_usable_security_privacy/thesis_website.gif?raw=true" width="60%" height="60%">
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/thesis_usable_security_privacy/thesis_website.gif?raw=true">
 
 ### Implementation example from Deep learning class
 
@@ -159,11 +159,11 @@ plotting_accuracies(batch_accuracies, baseline_accuracies)
 
 ### Theory example from Deep learning class
 
-<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/deep_learning_for_visual_recognition/image1.png?raw=true" width="60%" height="60%">
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/deep_learning_for_visual_recognition/image1.png?raw=true" width="80%" height="70%">
 
-<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/deep_learning_for_visual_recognition/image2.png?raw=true" width="60%" height="60%">
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/deep_learning_for_visual_recognition/image2.png?raw=true" width="80%" height="70%">
 
 ### Theory example from Machine learning class
 
-<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/machine_learning/image.png?raw=true" width="60%" height="60%">
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/machine_learning/image.png?raw=true" width="80%" height="70%">
 
