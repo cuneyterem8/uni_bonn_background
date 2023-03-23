@@ -9,7 +9,7 @@ Most of the exercises include heavily practical coding and some theoretical math
 Affine and projective transformations with applications to image formation (rigid body motion, cinematic chains); Parametric curves and surfaces with applications to 3D modelling; Ordinary differential equations with applications to physical based modelling
 
 
-### Python
+### Python example from task
 
 ```python
 import matplotlib.pyplot as plt
@@ -56,7 +56,7 @@ def MyFftConvolve2d(f, g):
 ```
 
 
-### Theory
+### Theory example from task
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/foundation_of_graphics_hw_only/image.png?raw=true" width="60%" height="60%">
 
