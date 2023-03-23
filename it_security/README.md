@@ -15,7 +15,7 @@ Most of the exercises include heavily theoretical math and some practical coding
 - privacy and pseudonymization
 
 
-### Theory
+### Theory example from task
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/it_security/image.png?raw=true" width="60%" height="60%">
 
