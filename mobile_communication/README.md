@@ -9,7 +9,7 @@ Most of the exercises include heavily practical coding and some theory
 Mobility Management in the Internet, Wireless Communication Basics, Wireless Networking Technologies, Cellular/Mobile Communication Networks (voice and data communication), Ad-hoc and Sensor Networks
 
 
-### Python
+### Python example from task
 
 ```python
 import plotly.figure_factory as figureFactory
