@@ -21,14 +21,14 @@ The primary purpose of this thesis is to expand the features of the LetsHashSalt
 That is why we added new programming languages to the website, such as Javascript, PHP, Golang, C# languages, and libraries like Pbkdf2 and Regex. In addition, we asked five professional software developers who are experts in their fields to test the security of the code blocks. 
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/thesis_usable_security_privacy/photos/1.JPEG?raw=true" width="60%" height="60%">
->
+
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/thesis_usable_security_privacy/photos/2.JPEG?raw=true" width="60%" height="60%">
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/thesis_usable_security_privacy/photos/3.JPEG?raw=true" width="60%" height="60%">
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/thesis_usable_security_privacy/photos/4.JPEG?raw=true" width="60%" height="60%">
->
+
 
 
 Finally, we made it a more comprehensive, secure password authentication website that many software developers can use
