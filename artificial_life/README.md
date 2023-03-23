@@ -10,7 +10,7 @@ Foundations of artificial life, cellular automata, Conway’s “Game of Life”
 learning, artificial immune systems, adaptive behaviour, self-organising criticality, multi-agent systems, and swarm intelligence, particle swarm optimization
 
 
-### Theory
+### Theory example from task
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/artificial_life/image.png?raw=true" width="60%" height="60%">
 
