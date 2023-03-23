@@ -9,9 +9,8 @@ Most of the exercises include heavily theory and some practical coding
 Threats and attack scenarios, organizational aspects, technical aspects: securing networks using different firewall concepts, IDS and IPS (intrusion detection systems and intrusion prevention systems), security protocols for different protocol layers, integrity protection: hash functions and their weaknesses, certificates, privacy protection, encryption
 
 
-### Theory
+### Theory example from task
 
-> Example from exercise
 
 Part1:
 
@@ -30,10 +29,7 @@ This is one of the example below, also, there is a photo p4 shows that,
 at the bottom of the photo, this line can be seen as decrypted.
 
 
-from p3.pcap;
-
-----
-# Packet 6 XXXX
+Packet 6 XXXX
 - 1904
 - 21.314009
 - 216.58.207.38
@@ -43,10 +39,7 @@ from p3.pcap;
 - Server Hello, Change Cipher Spec, Encrypted Extensions, Finished
 
 
-
-from the http_sample.pcap;
-----
-# Packet 163 from C:\Users\Asus\Desktop\https_sample.pcap
+Packet 163 from C:\Users\Asus\Desktop\https_sample.pcap
 - 563
 - 10.774685
 - 10.148.252.58
