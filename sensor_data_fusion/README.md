@@ -9,7 +9,7 @@ Most of the exercises include heavily theoretical math and some practical coding
 Gaussian probability density functions, Kalman filter, Multi-Hypothesis-Trackier, Interacting Multiple Model Filter, Retrodiction, Smoothing, Maneuver Modeling
 
 
-### Python
+### Python example from task
 
 ```python
 import numpy as np
@@ -77,7 +77,7 @@ if __name__ == '__main__':
 > output
 
 
-### Theory
+### Theory example from task
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/sensor_data_fusion/image.png?raw=true" width="60%" height="60%">
 
