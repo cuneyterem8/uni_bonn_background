@@ -16,7 +16,7 @@ I took a total of 120 credits with a total of 14 courses and thesis+seminar from
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/diplomas/bonn_transcript_1.JPEG?raw=true" width="80%" height="70%">
 
-intelligence systems: https://github.com/cuneyterem8/uni_bonn_background/tree/main/artificial_life <br />
+intelligence systems: [artificial life](https://github.com/cuneyterem8/uni_bonn_background/tree/main/artificial_life) <br />
 machine learning, neural networks, robot learning, cognitive robotics, cognitive robotics lab, humanoid robots lab, humanoid robots seminar
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/diplomas/bonn_transcript_2.JPEG?raw=true" width="80%" height="70%">
