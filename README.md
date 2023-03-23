@@ -1,10 +1,10 @@
 # Computer Science Master in University of Bonn
 
-<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/diplomas/uni_bonn.jpg?raw=true" height="80%">
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/diplomas/uni_bonn.jpg?raw=true">
 
 The University of Bonn is one of the largest research-based universities in the world. The THE ranking is 89 and the QS ranking is 201 in the world in 2023. 
 
-<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/diplomas/desk.JPEG?raw=true" height="80%">
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/diplomas/desk.JPEG?raw=true">
 
 Being the best university in Germany in the field of mathematics, Uni of Bonn has also adjusted its computer science department to have a solid mathematical foundation. For this reason, many courses are built on combining heavy mathematical theory and practical coding skills.
 
