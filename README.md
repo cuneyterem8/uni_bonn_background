@@ -165,5 +165,7 @@ plotting_accuracies(batch_accuracies, baseline_accuracies)
 
 ### Theory example from Machine learning class
 
-<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/machine_learning/image.png?raw=true" width="80%" height="70%">
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/machine_learning/image1.png?raw=true" width="80%" height="70%">
+
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/machine_learning/image2.png?raw=true" width="80%" height="70%">
 
