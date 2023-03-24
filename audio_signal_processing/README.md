@@ -11,6 +11,12 @@ Theoretical introduction to analog and digital Signal Processing; Fourier Transf
 
 ### Theory example from task
 
-<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/audio_signal_processing/image.png?raw=true" width="60%" height="60%">
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/audio_signal_processing/image1.png?raw=true" width="60%" height="60%">
+
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/audio_signal_processing/image2.png?raw=true" width="60%" height="60%">
+
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/audio_signal_processing/image3.png?raw=true" width="60%" height="60%">
+
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/audio_signal_processing/image4.png?raw=true" width="60%" height="60%">
 
 > Example from exercise
