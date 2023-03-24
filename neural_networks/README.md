@@ -11,6 +11,12 @@ Multi-layer perceptron, radial-basis function nets, Hopfield nets, self organizi
 
 ### Theory example from task
 
-<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/neural_networks/image.png?raw=true" width="60%" height="60%">
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/neural_networks/exercise_all/IMG_5591.JPEG" width="60%" height="60%">
+
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/neural_networks/exercise_all/IMG_5592.JPEG" width="60%" height="60%">
+
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/neural_networks/exercise_all/IMG_5593.JPEG" width="60%" height="60%">
+
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/neural_networks/exercise_all/IMG_5601.JPEG" width="60%" height="60%">
 
 > Example from exercise
