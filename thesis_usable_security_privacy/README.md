@@ -13,7 +13,7 @@ Relevant implementations are partial due to avoid non-allowed code content, the 
 
 Password security has always been a significant issue for software developers and users. At first glance, it may seem that software developers care a lot about security. However, many studies have shown that software developers should be at least as careful as users due to a lack of security concerns. For this reason, different infrastructures have been developed to support software developers in many fields. One example is the LetsHashSalt website, a platform that allows software developers to write more secure password authentication. 
 
-The primary purpose of this thesis is to expand the features of the LetsHashSalt website, make it appealing to more programmers, and help them to write secure password authentication codes in different languages. That is why we modified and added new programming languages to the website, such as Python, Java, Javascript, PHP, Golang, C# languages, and libraries like Argon2, Bcrypt, Pbkdf2, regex, zxcvbn and totp. In addition, we asked five professional software developers who are experts in their fields to test the security of the code blocks. 
+The primary purpose of this thesis is to expand the features of the LetsHashSalt website, make it appealing to more programmers, and help them to write secure password authentication codes in different languages. That is why we modified and added new programming languages to the website, such as Python, Java, Javascript, PHP, Golang, C# languages, and libraries like Argon2, Bcrypt, Pbkdf2, regex, zxcvbn and totp. In addition, we asked five professional software developers who are experts in their fields to test the security of the code blocks, they can be seen in the files. 
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/thesis_usable_security_privacy/thesis_website.gif?raw=true" width="60%" height="60%">
 
@@ -805,58 +805,714 @@ main();
 
 ### Argon2id
 
+```
+no installation needed
+```
+
+```
+# Argon2 is one of the best hashing algorithm for password storage. 
+# By different parameters, it hashes password by using default salt
+# hash can be verified for different passwords
+
+function hash_password(&$password) {
+    # hash_length, salt_length, type: argon2id are default
+    # if needed regulate parameters time_cost, memory_cost, threads for your system
+    $options = [
+        'memory_cost' => PASSWORD_ARGON2_DEFAULT_MEMORY_COST, 
+        'time_cost' => PASSWORD_ARGON2_DEFAULT_TIME_COST,
+        'threads' => PASSWORD_ARGON2_DEFAULT_THREADS
+    ];
+
+    return password_hash($password, PASSWORD_ARGON2ID, $options);
+}
+
+function verify(&$password, &$pw_hash) {
+    if (password_verify($password, $pw_hash)) {
+        return 'true';
+    } else {
+        return 'false';
+    }
+}
+
+# example password, change with your database password or input password
+$password = 's3cr3t';
+echo $hash = hash_password($password), "\r\n";    #print hash as string
+
+$password1 = 's3cr3t';
+$password2 = 's3cr4t';
+echo $verify = verify($password1, $hash), "\r\n";           #print true
+echo $verify = verify($password2, $hash), "\r\n";           #print false
+```
+
 ### Bcrypt
 
+```
+no installation needed
+```
+
+```
+# Bcrypt is one of the best hashing algorithm for password storage. 
+# By different parameters, it hashes password by using default salt
+# hash can be verified for different passwords
+
+function hash_password(&$password) {
+    # if needed regulate cost parameter
+    $options = [
+        'cost' => 12,
+    ];
+
+    return password_hash($password, PASSWORD_BCRYPT, $options);
+}
+
+function verify(&$password, &$pw_hash) {
+    if (password_verify($password, $pw_hash)) {
+        return 'true';
+    } else {
+        return 'false';
+    }
+}
+
+# example password, change with your database password or input password
+$password = 's3cr3t';
+echo $hash = hash_password($password), "\r\n";    #print hash as string
+
+$password1 = 's3cr3t';
+$password2 = 's3cr4t';
+echo $verify = verify($password1, $hash), "\r\n";           #print true
+echo $verify = verify($password2, $hash), "\r\n";           #print false
+```
+
 ### Pbkdf2
+
+```
+no installation needed
+```
+
+```
+# Pbkdf2 is one of the best hashing algorithm for password storage. 
+# By different parameters, it hashes password by using default salt
+# hash can be verified for different passwords
+
+function hash_password(&$password) {
+    # iteration and salt are default, if needed change the values
+    # $salt = openssl_random_pseudo_bytes(16);
+    $iterations = 1000;
+    return hash_pbkdf2("sha256", $password, $iterations, 20);
+}
+
+function verify(&$password, &$pw_hash) {
+    if (hash_password($password) == $pw_hash) {
+        return 'true';
+    } else {
+        return 'false';
+    }
+}
+
+# example password, change with your database password or input password
+$password = 's3cr3t';
+echo $hash = hash_password($password), "\r\n";      #print hash as string
+
+$password1 = 's3cr3t';
+$password2 = 's3cr4t';
+echo verify($password1, $hash), "\r\n";             #print true
+echo verify($password2, $hash), "\r\n";             #print false
+```
 
 ### Password Policy
 
 ### zxcvbn
 
+```
+composer require bjeavons/zxcvbn-php
+```
+
+```
+# Password policy is important for defining minimum requirements 
+# for creating strong passwords
+# it creates patterns with having at least one 
+# upper letter/lower letter/number/special character/8-64 length
+# check password strength with zxcvbn library
+
+require_once 'vendor/autoload.php';
+use ZxcvbnPhp\Zxcvbn;
+
+function composition(&$password) {
+    $number = preg_match_all('/(?=\S*[0-9])/', $password);
+    $upper = preg_match_all('/(?=\S*[A-Z])/', $password);
+    $lower = preg_match_all('/(?=\S*[a-z])/', $password);
+    $special = preg_match_all('/(?=.*[^A-Za-z0-9])/', $password);
+    $length = strlen($password) > 7 && strlen($password) < 65;
+
+    $array = array();
+    array_push($array, ($number ? 'true' : 'false'), ($upper ? 'true' : 'false'), ($lower ? 'true' : 'false'), ($special ? 'true' : 'false'), ($length ? 'true' : 'false'));
+    
+    return $array;
+}
+
+function check_strength(&$password) {
+    $strength = array(
+        0 => "Worst",
+        1 => "Bad",
+        2 => "Weak",
+        3 => "Good",
+        4 => "Strong",
+    );
+
+    $zxcvbn = new Zxcvbn();
+    $result = $zxcvbn->passwordStrength($password);
+
+    $array = array(
+        'score' => $result['score'],
+        'stregth' => $strength[$result['score']],
+        'warning' => $result['feedback']['warning'],
+    );
+
+    return $array;
+}
+
+# example password, change with your database password or input password
+$password = 'Expassword0.';
+
+$x = composition($password);                #print each requirement as true
+print_r($x);    
+
+$y = check_strength($password);             #print strength features
+print_r($y);
+```
+
 ### Two Factor Authentication
 
 ### totp
 
+```
+composer require spomky-labs/otphp
+```
+
+```
+# OTP with TOTP and HOTP are used for password authentication to increase security
+# TOTP is commonly used version, create totp secret and verify secret within valid time period
+# create provisioning_uri and use it by scanning barcode with Google Authenticator
+
+require_once(__DIR__ . '/vendor/autoload.php');
+use OTPHP\TOTP;
+
+function generate_totp_secret() {
+    #use random secret
+    $secret = 'JDDK4U6G3BJLEZ7Y';
+
+    # if needed, change parameters
+    $otp = TOTP::create($secret, 20, 'sha512', 8, 100);
+    
+    return $otp;
+}
+    
+function generate_uri(&$otp, &$user_mail, &$issuer_name) {
+    $otp->setLabel($user_mail);
+    $otp->setIssuer($issuer_name);
+    
+    return $otp->getProvisioningUri();
+}
 
 
+$otp = generate_totp_secret();
 
-## lang
+# create totp secret and verify within valid time period
+$totp_secret_first = $otp->now();
+echo $otp->verify($totp_secret_first) ? "true" : "false", "\r\n";       #print true 
+sleep(30);
+echo $otp->verify($totp_secret_first) ? "true" : "false", "\r\n";       #print false
+
+# change mail and issuer parameters
+# provisioning_uri can be used for QR-code scan by Google Authenticator
+$user_mail = 'example@mail.com';
+$issuer_name = 'issuer name';
+$otp_uri = generate_uri($otp, $user_mail, $issuer_name);                
+echo $otp_uri, "\r\n"; 
+```
+
+## GoLang
 
 ### Password Storage
 
 ### Argon2id
 
+```
+go get github.com/alexedwards/argon2id
+```
+
+```
+package main
+
+// Argon2 is one of the best hashing algorithm for password storage.
+// By different parameters, it hashes password by using default salt
+// hash can be verified for different passwords
+
+import (
+	"fmt"
+	"log"
+
+	"github.com/alexedwards/argon2id"
+)
+
+// hash_length, salt_length, type: argon2id are default, if needed increase the values
+// if needed regulate parameters time_cost, memory_cost, parallelism for your system
+func hash_password(password string) string {
+	hash, err := argon2id.CreateHash(password, argon2id.DefaultParams)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return hash
+}
+
+func verify(pw_hash string, password string) bool {
+	match, err := argon2id.ComparePasswordAndHash(password, pw_hash)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return match
+}
+
+func main() {
+	// example password, change with your database password or input password
+	hash := "" + hash_password("s3cr3t")
+	fmt.Println(hash) //print hash as string
+
+	fmt.Println(verify(hash, "s3cr3t")) //print true
+	fmt.Println(verify(hash, "s3cr4t")) //print false
+}
+```
+
 ### Bcrypt
 
+```
+go get golang.org/x/crypto/bcrypt
+```
+
+```
+package main
+
+// Bcrypt is one of the best hashing algorithm for password storage.
+// By different parameters, it hashes password by using default salt
+// hash can be verified for different passwords
+
+import (
+	"fmt"
+	"log"
+
+	"golang.org/x/crypto/bcrypt"
+)
+
+// gensalt specifies round 14, if needed increase the value
+func hash_password(password string) string {
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return string(hash)
+}
+
+func verify(pw_hash string, password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(pw_hash), []byte(password))
+	return err == nil
+}
+
+func main() {
+	// example password, change with your database password or input password
+	hash := "" + hash_password("s3cr3t")
+	fmt.Println(hash) //print hash as string
+
+	fmt.Println(verify(hash, "s3cr3t")) //print true
+	fmt.Println(verify(hash, "s3cr4t")) //print false
+}
+```
+
 ### Pbkdf2
+
+```
+go get golang.org/x/crypto/pbkdf2
+```
+
+```
+package main
+
+// Pbkdf2 is one of the best hashing algorithm for password storage.
+// By different parameters, it hashes password by using default salt
+// hash can be verified for different passwords
+
+import (
+	"bytes"
+	"crypto/rand"
+	"crypto/sha256"
+	"fmt"
+	"log"
+
+	"golang.org/x/crypto/pbkdf2"
+)
+
+//iteration and salt are default, if needed increase the values
+var salt = generateRandomBytes(16)
+
+func generateRandomBytes(n uint32) []byte {
+	b := make([]byte, n)
+	_, err := rand.Read(b)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+
+	return b
+}
+
+func hashPassword(password string) []byte {
+	return pbkdf2.Key([]byte(password), salt, 4096, 32, sha256.New)
+}
+
+func verifyPassword(password string, hash []byte) bool {
+	var pw_hash []byte = pbkdf2.Key([]byte(password), salt, 4096, 32, sha256.New)
+	var compare int = bytes.Compare(hash, pw_hash)
+
+	if compare == 0 {
+		return true
+	} else {
+		return false
+	}
+}
+
+func main() {
+	// example password, change with your database password or input password
+	hash := hashPassword("s3cr3t")
+	fmt.Printf("%x\n", hash) //print hash as string instead of bytes
+
+	fmt.Println(verifyPassword("s3cr3t", hash)) //print true
+	fmt.Println(verifyPassword("s3cr4t", hash)) //print false
+}
+```
 
 ### Password Policy
 
 ### zxcvbn
 
+```
+sudo apt install golang-github-nbutton23-zxcvbn-go-dev
+go get github.com/nbutton23/zxcvbn-go
+```
+
+```
+package main
+
+// Password policy is important for defining minimum requirements
+// for creating strong passwords
+// it creates patterns with having at least one
+// upper letter/lower letter/number/special character/8-64 length
+// check password strength with zxcvbn library
+
+import (
+	"fmt"
+	"regexp"
+
+	"github.com/nbutton23/zxcvbn-go"
+)
+
+func composition(password string) string {
+	number, _ := regexp.MatchString(".*[0-9]", password)
+	upper_lower, _ := regexp.MatchString(".*[a-zA-Z]", password)
+	special, _ := regexp.MatchString(".*[^A-Za-z0-9]", password)
+	length, _ := regexp.MatchString(".{8,64}", password)
+
+	return fmt.Sprintf("%t, %t, %t, %t", number, upper_lower, special, length)
+}
+
+func check_strength(password string) string {
+	result := zxcvbn.PasswordStrength(password, nil)
+	strength := map[interface{}]interface{}{
+		0: "Worst",
+		1: "Bad",
+		2: "Weak",
+		3: "Good",
+		4: "Strong",
+	}
+
+	return fmt.Sprintf("%v, %v", result.Score, strength[result.Score])
+}
+
+func main() {
+	//example password, change with your database password or input password
+	var password string = "Expassword0."
+
+	fmt.Println("composition: ", composition(password))       //print each requirement as true
+	fmt.Println("check_strength: ", check_strength(password)) //print strength features
+}
+```
+
 ### Two Factor Authentication
 
 ### totp
 
+```
+go get github.com/xlzd/gotp
+```
 
+```
+package main
 
+// OTP with TOTP and HOTP are used for password authentication to increase security
+// TOTP is commonly used version, create totp secret and verify secret within valid time period
+// create provisioning_uri and use it by scanning barcode with Google Authenticator
 
-## lang
+import (
+	"fmt"
+	"time"
+
+	"github.com/xlzd/gotp"
+)
+
+// if needed, change interval parameters
+func generate_totp_secret() *gotp.TOTP {
+	return gotp.NewDefaultTOTP("4S62BZNFXXSZLCRO")
+}
+
+func generate_uri(totp *gotp.TOTP, user_mail string, issuer_name string) string {
+	variable := totp.ProvisioningUri(user_mail, issuer_name)
+	return variable
+}
+
+func main() {
+	// create totp secret and verify within valid time period
+	totp := generate_totp_secret()
+	totp_secret_first := totp.Now()
+
+	fmt.Println(totp.Verify(totp_secret_first, int(time.Now().Unix())))
+	time.Sleep(time.Second * time.Duration(30))
+	fmt.Println(totp.Verify(totp_secret_first, int(time.Now().Unix())))
+
+	// change mail and issuer parameters
+	// provisioning_uri can be used for QR-code scan by Google Authenticator
+	fmt.Println(generate_uri(totp, "name@mail.com", "issuer name")) //print provisioning uri
+}
+```
+
+## C#
 
 ### Password Storage
 
 ### Argon2id
 
+```
+dotnet add package Konscious.Security.Cryptography.Argon2 --version 1.3.0
+```
+
+```
+// Argon2 is one of the best hashing algorithm for password storage. 
+// By different parameters, it hashes password by using default salt
+// hash can be verified for different passwords
+
+using System;
+using System.Security.Cryptography;
+using Konscious.Security.Cryptography;
+using System.Text;
+
+public class Argon_class
+{
+    private static byte[] CreateSalt()
+    {
+        var buffer = new byte[128];
+        var generator = RandomNumberGenerator.Create();
+        generator.GetBytes(buffer);
+        return buffer;
+    }
+
+    // hash_length, salt_length, type: argon2id are default, if needed increase the values 
+    // if needed regulate parameters time_cost, memory_cost, parallelism for your system
+    private static byte[] hash_password(string password, byte[] salt)
+    {
+        var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password));
+        argon2.DegreeOfParallelism = 16;
+        argon2.MemorySize = 8192;
+        argon2.Iterations = 40;
+        argon2.Salt = salt;
+
+        return argon2.GetBytes(128);
+    }
+
+    private static bool verify(byte[] pw_hash, string password, byte[] salt)
+    {
+        var new_hash = hash_password(password, salt);
+        return pw_hash.SequenceEqual(new_hash);
+    }
+
+    public static void Run()
+    {
+        var salt = CreateSalt();
+        // Console.WriteLine($"salt '{ Convert.ToBase64String(salt) }'.");
+
+        // example password, change with your database password or input password
+        var pw_hash = hash_password("s3cr3t", salt);
+        Console.WriteLine($"'{ Convert.ToBase64String(pw_hash) }'.");       //print hash as string
+
+        var result1 = verify(pw_hash, "s3cr3t", salt);
+        Console.WriteLine(result1 ? "True!" : "False!");                    //print true
+
+        var result2 = verify(pw_hash, "s3cr4t", salt);
+        Console.WriteLine(result2 ? "True!" : "False!");                    //print false
+    }
+}
+```
+
 ### Bcrypt
 
-### Pbkdf2
+```
+dotnet add package BCrypt.Net-Next --version 4.0.3
+```
+
+```
+// Bcrypt is one of the best hashing algorithm for password storage. 
+// By different parameters, it hashes password by using default salt
+// hash can be verified for different passwords
+
+using System;
+using BCryptNet = BCrypt.Net.BCrypt;
+
+public class Bcrypt_class
+{
+    //gensalt specifies round 11, if needed increase the value
+    private static string hash_password(string password)
+    {
+        string pw_hash = BCryptNet.HashPassword(password);
+        return pw_hash;
+    }
+
+    private static bool verify(string pw_hash, string password)
+    {
+        return BCryptNet.Verify(password, pw_hash);
+    }
+    public static void Run()
+    {
+        // example password, change with your database password or input password
+        string pw_hash = hash_password("s3cr3t");
+        Console.WriteLine(pw_hash);                     //print hash as string
+
+        var result1 = verify(pw_hash, "s3cr3t");
+        Console.WriteLine(result1);                     //print true
+
+        var result2 = verify(pw_hash, "s3cr4t");
+        Console.WriteLine(result2);                     //print false
+
+    }
+}
+```
 
 ### Password Policy
 
 ### zxcvbn
 
+```
+dotnet add package zxcvbn-core --version 7.0.92
+```
+
+```
+// Password policy is important for defining minimum requirements 
+// for creating strong passwords
+// it creates patterns with having at least one 
+// upper letter/lower letter/number/special character/8-64 length
+// check password strength with zxcvbn library
+
+using System;
+using System.Text.RegularExpressions;
+using Zxcvbn;
+
+public class Policy_class
+{
+    private static string composition(string password)
+    {
+        Regex number = new Regex(@"(?=.*[0-9])");
+        Regex upper_lower = new Regex(@"(?=.*[a-z])(?=.*[A-Z])");
+        Regex special = new Regex(@"[^A-Za-z0-9]");
+        Regex length = new Regex(@".{8,64}$");
+        
+        Match match1 = number.Match(password);
+        Match match2 = upper_lower.Match(password);
+        Match match3 = special.Match(password);
+        Match match4 = length.Match(password);
+
+        bool[] test = new bool[4];
+        test[0] = match1.Success;
+        test[1] = match2.Success;
+        test[2] = match3.Success;
+        test[3] = match4.Success;
+
+        return "" + test[0] + ", " + test[1] + ", " + test[2] + ", " + test[3];
+    }
+
+    private static string check_strength(string password)
+    {
+        var result = Zxcvbn.Core.EvaluatePassword(password);
+        Dictionary strength = new Dictionary();
+        strength.Add(0, "Worst");
+        strength.Add(1, "Bad");
+        strength.Add(2, "Weak");
+        strength.Add(3, "Good");
+        strength.Add(4, "Strong");
+
+        string last = "" + result.Score + ", " + strength.FirstOrDefault(x => x.Key == result.Score).Value + ", " + result.Feedback.Warning + ", " + result.Feedback.Suggestions;
+        return last;
+    }
+
+    public static void Run()
+    {   
+        // example password, change with your database password or input password
+        string password = "Expassword0.";
+
+        string a = composition(password);       //print each requirement as true
+        Console.WriteLine(a);
+
+        string b = check_strength(password);    //print strength features
+        Console.WriteLine(b);
+    }
+}
+```
+
 ### Two Factor Authentication
 
 ### totp
 
+```
+sudo apt-get install -y libgdiplus
+dotnet add package GoogleAuthenticator --version 3.0.0
+```
 
+```
+// OTP with TOTP and HOTP are used for password authentication to increase security
+// TOTP is commonly used version, create totp secret and verify secret within valid time period
+// create provisioning_uri and use it by scanning barcode with Google Authenticator
+
+using System;
+using Google.Authenticator;
+
+class Totp_class
+{
+    static void Main(string[] args)
+    {
+        //if needed, change interval parameters
+        string key = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 10);
+        string issuer = "issuer name";
+        string accountTitle = "name@mail.com";
+
+        // create totp secret and verify within valid time period
+        TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
+        SetupCode setupInfo = tfa.GenerateSetupCode(issuer, accountTitle, key, false, 3);
+
+        string second_factor_now = tfa.GetCurrentPIN(key, false);
+
+        Console.Write(tfa.ValidateTwoFactorPIN(key, second_factor_now) + "\r\n");       //print true
+
+        // change mail and issuer parameters
+        // provisioning_uri can be used for QR-code scan by Google Authenticator
+        var provisionUrl = string.IsNullOrWhiteSpace(issuer)
+            ? $"otpauth://totp/{accountTitle}?secret={key.Trim('=')}"
+            : $"otpauth://totp/{Uri.EscapeDataString(issuer)}:{accountTitle}?secret={key.Trim('=')}&issuer={Uri.EscapeDataString(issuer)}";
+
+        Console.Write(provisionUrl + "\r\n");
+
+    }
+}
+```
