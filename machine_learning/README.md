@@ -15,4 +15,8 @@ Types of learning and analysis tasks, most important non-parametric and parametr
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/machine_learning/image2.png?raw=true" width="60%" height="60%">
 
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/machine_learning/image3.png?raw=true" width="60%" height="60%">
+
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/machine_learning/image4.png?raw=true" width="60%" height="60%">
+
 > Example from exercise
