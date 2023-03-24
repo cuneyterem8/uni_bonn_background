@@ -34,11 +34,11 @@ Finally, we made it a more comprehensive, secure password authentication website
 
 ### Argon2id
 
-'''
+'''sh
 pip install argon2-cffi
 '''
 
-'''
+'''python
 # Argon2 is one of the best hashing algorithm for password storage. 
 # By different parameters, it hashes password by using default salt
 # hash can be verified for different passwords
