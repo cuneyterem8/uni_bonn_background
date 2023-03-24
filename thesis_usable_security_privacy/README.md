@@ -13,7 +13,7 @@ Relevant implementations are partial due to avoid non-allowed code content, the 
 
 Password security has always been a significant issue for software developers and users. At first glance, it may seem that software developers care a lot about security. However, many studies have shown that software developers should be at least as careful as users due to a lack of security concerns. For this reason, different infrastructures have been developed to support software developers in many fields. One example is the LetsHashSalt website, a platform that allows software developers to write more secure password authentication. 
 
-The primary purpose of this thesis is to expand the features of the LetsHashSalt website, make it appealing to more programmers, and help them to write secure password authentication codes in different languages. That is why we modified and added new programming languages to the website, such as Python, Java, Javascript, PHP, Golang, C# languages, and libraries like Argon2, Bcrypt, Pbkdf2, regex and totp. In addition, we asked five professional software developers who are experts in their fields to test the security of the code blocks. 
+The primary purpose of this thesis is to expand the features of the LetsHashSalt website, make it appealing to more programmers, and help them to write secure password authentication codes in different languages. That is why we modified and added new programming languages to the website, such as Python, Java, Javascript, PHP, Golang, C# languages, and libraries like Argon2, Bcrypt, Pbkdf2, regex, zxcvbn and totp. In addition, we asked five professional software developers who are experts in their fields to test the security of the code blocks. 
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/thesis_usable_security_privacy/thesis_website.gif?raw=true" width="60%" height="60%">
 
@@ -31,6 +31,8 @@ Finally, we made it a more comprehensive, secure password authentication website
 # Website Languages
 
 ## Python
+
+### Password Storage
 
 ### Argon2id
 
@@ -105,3 +107,168 @@ if __name__ == '__main__':
     main()
 ```
 
+### Pbkdf2
+
+```
+pip install pbkdf2
+```
+
+```
+# Pbkdf2 is one of the best hashing algorithm for password storage. 
+# By different parameters, it hashes password by using default salt
+# hash can be verified for different passwords
+
+from pbkdf2 import crypt
+
+# iteration and salt are default, if needed increase the values
+def hash_password(password):
+    return crypt(password)
+
+def verify(pw_hash, password):
+    if pw_hash == crypt(password, pw_hash):
+        return True
+    else:
+        return False
+
+def main():
+    # example password, change with your database password or input password
+    pw_hash = hash_password('s3cr3t')       
+    print(pw_hash)                          #print hash as string
+    print(verify(pw_hash, 's3cr3t'))        #print true
+    print(verify(pw_hash, 's3cr4t'))        #print false
+
+if __name__ == '__main__':
+    main()
+```
+
+### Password Policy
+
+### zxcvbn
+
+```
+pip install zxcvbn
+```
+
+```
+# Password policy is important for defining minimum requirements 
+# for creating strong passwords
+# it creates patterns with having at least one 
+# upper letter/lower letter/number/special character/8-64 length
+# check password strength with zxcvbn library
+
+import re
+from zxcvbn import zxcvbn
+from dataclasses import dataclass
+from typing import Tuple
+
+PATTERNS = dict(
+    number = re.compile('[0-9]'),
+    lower = re.compile('[a-z]'),
+    upper = re.compile('[A-Z]'),
+    special = re.compile('[^A-Za-z0-9]'),
+    length = re.compile('.{8,64}$'),
+)
+
+def composition(password):
+    return {
+        label : bool(rgx.search(password))
+        for label, rgx in PATTERNS.items()
+    }
+
+STRENGTHS = {
+    0: 'Worst',
+    1: 'Bad',
+    2: 'Weak',
+    3: 'Good',
+    4: 'Strong'
+}
+
+@dataclass(frozen = True)
+class PasswordStrength:
+    score: int
+    label: str
+    warning: str
+    suggestions: Tuple[str]
+    
+def check_strength(password):
+    z = zxcvbn(password, user_inputs=['John', 'Smith'])
+    return PasswordStrength(
+        z['score'],
+        STRENGTHS[z['score']],
+        z['feedback']['warning'],
+        tuple(z['feedback']['suggestions']),
+    )
+
+def main():
+    # example password, change with your database password or input password
+    password = 'Expassword0.'
+
+    x = composition(password)
+    print("composition: ", x)               #print each requirement as true
+
+    y = check_strength(password)
+    print("check_strength: ", y)            #print strength features
+
+if __name__ == '__main__':
+    main()
+```
+
+### Two Factor Authentication
+
+### totp
+
+```
+pip install pyotp
+```
+
+```
+# OTP with TOTP and HOTP are used for password authentication to increase security
+# TOTP is commonly used version, create totp secret and verify secret within valid time period
+# create provisioning_uri and use it by scanning barcode with Google Authenticator
+
+import pyotp
+import time
+
+# if needed, change interval parameters
+def generate_totp_secret():
+    return pyotp.TOTP(pyotp.random_base32(), interval=30)
+
+def generate_uri(second_factor, user_mail, issuer_name):
+    return second_factor.provisioning_uri(user_mail, issuer_name)
+
+def main():
+    # create totp secret and verify within valid time period
+    totp_secret = generate_totp_secret()
+    totp_secret_first = totp_secret.now()
+
+    print(totp_secret.verify(totp_secret_first))        #print true 
+    time.sleep(30)
+    print(totp_secret.verify(totp_secret_first))        #print false
+
+    # change mail and issuer parameters
+    # provisioning_uri can be used for QR-code scan by Google Authenticator
+    provisioning_uri = generate_uri(totp_secret, "example@mail.com", "issuer name")
+    print(provisioning_uri)                             #print provisioning uri
+
+if __name__ == '__main__':
+    main()
+```
+
+
+## lang
+
+### Password Storage
+
+### Argon2id
+
+### Bcrypt
+
+### Pbkdf2
+
+### Password Policy
+
+### zxcvbn
+
+### Two Factor Authentication
+
+### totp
