@@ -10,6 +10,8 @@ Being the best university in Germany in the field of mathematics, Uni of Bonn ha
 
 <img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/diplomas/bonn_diploma.JPEG?raw=true" width="80%" height="70%">
 
+<img src="https://github.com/cuneyterem8/uni_bonn_background/blob/main/diplomas/bonn_transcript_2.JPEG?raw=true" width="80%" height="70%">
+
 ## Lectures, Thesis, Labs, Seminars
 
 I took a total of 120 credits with a total of 14 courses and thesis+seminar from three different fields. All lecture details can be seen in files here with a summary of the content of each one of them. The programming languages in classes are mostly Python and C++. The transcript and diploma supplement can be seen [here](https://github.com/cuneyterem8/uni_bonn_background/tree/main/diplomas)
